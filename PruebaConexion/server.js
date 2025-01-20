@@ -1,7 +1,7 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const app = express();
-const dbPath = 'L:\\AccesoADatos\\BaseDatos\\CentroMedico';
+const dbPath = '..\\BD\\horariappBD';
 const cors = require('cors'); 
 
 app.use(cors());
