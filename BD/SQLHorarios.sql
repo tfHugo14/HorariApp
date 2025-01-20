@@ -1,75 +1,74 @@
-create database GestionHoraria
-
-create table Ciclos(
-id_ciclos varchar(5) primary key,
-nombre varchar(50) not null,
-descripcion varchar(100) not null,
-duracion int not null
+CREATE TABLE Ciclos (
+    id_ciclos TEXT PRIMARY KEY,
+    nombre TEXT NOT NULL,
+    descripcion TEXT NOT NULL,
+    duracion INTEGER NOT NULL
 );
 
-create table Profesor(
-id_profesor varchar(5) primary key,
-nombre varchar(50)
+CREATE TABLE Profesor (
+    id_profesor TEXT PRIMARY KEY,
+    nombre TEXT
 );
 
-create table Modulos(
-id_modulo varchar(5) primary key,
-duracion int,
-nombre varchar(30),
-horas_semanales smallint,
-descripcion varchar(100),
-id_ciclos varchar(5),
-id_profesor varchar(5),
-foreign key (id_ciclos) references Ciclos,
-foreign key (id_profesor) references Profesor
+CREATE TABLE Modulos (
+    id_modulo TEXT PRIMARY KEY,
+    duracion INTEGER,
+    nombre TEXT,
+    horas_semanales INTEGER,
+    descripcion TEXT,
+    id_ciclos TEXT,
+    id_profesor TEXT,
+    FOREIGN KEY (id_ciclos) REFERENCES Ciclos (id_ciclos),
+    FOREIGN KEY (id_profesor) REFERENCES Profesor (id_profesor)
 );
 
-create table Sesiones(
-id_sesiones varchar(5) primary key,
-hora_ini date,
-hora_fin date,
-dia date,
-aula smallint,
-descripcion varchar(50),
-id_modulos int
-)
+CREATE TABLE Sesiones (
+    id_sesiones TEXT PRIMARY KEY,
+    hora_ini TEXT,
+    hora_fin TEXT,
+    dia TEXT,
+    aula INTEGER,
+    descripcion TEXT,
+    id_modulos INTEGER,
+    FOREIGN KEY (id_modulos) REFERENCES Modulos
+);
 
-create table Estudiante(
-id_usuario varchar(5) primary key,
-nombre varchar(30),
-contrasenha varchar(30),
-esAdmin bit,
-dni varchar(9)
-)
+CREATE TABLE Estudiante (
+    id_usuario TEXT PRIMARY KEY,
+    nombre TEXT,
+    contrasenha TEXT,
+    esAdmin INTEGER, 
+    dni TEXT
+);
 
-create table Administrador(
-id_usuario varchar(5) primary key,
-nombre varchar(30),
-contrasenha varchar(30),
-esAdmin bit,
-dni varchar(9)
-)
+CREATE TABLE Administrador (
+    id_usuario TEXT PRIMARY KEY,
+    nombre TEXT,
+    contrasenha TEXT,
+    esAdmin INTEGER,
+    dni TEXT
+);
 
-create table matricular_ciclo(
-id_ciclos varchar(5),
-id_usuario varchar(5),
-primary key(id_ciclos,id_usuario),
-foreign key (id_ciclos) references Ciclos,
-foreign key(id_usuario) references Estudiante
-)
+CREATE TABLE matricular_ciclo (
+    id_ciclos TEXT,
+    id_usuario TEXT,
+    PRIMARY KEY (id_ciclos, id_usuario),
+    FOREIGN KEY (id_ciclos) REFERENCES Ciclos (id_ciclos),
+    FOREIGN KEY (id_usuario) REFERENCES Estudiante (id_usuario)
+);
 
-create table matricular_modulos(
-id_modulos varchar(5),
-id_usuario varchar(5),
-primary key(id_modulos,id_usuario),
-foreign key (id_modulos) references Modulos,
-foreign key(id_usuario) references Estudiante
-)
+CREATE TABLE matricular_modulos (
+    id_modulos TEXT,
+    id_usuario TEXT,
+    PRIMARY KEY (id_modulos, id_usuario),
+    FOREIGN KEY (id_modulos) REFERENCES Modulos (id_modulo),
+    FOREIGN KEY (id_usuario) REFERENCES Estudiante (id_usuario)
+);
 
-create table administrar(
-id_ciclos varchar(5),
-id_usuario varchar(5),
-primary key(id_ciclos,id_usuario),
-foreign key (id_ciclos) references Ciclos,
-foreign key(id_usuario) references Administrador
-)
+CREATE TABLE administrar (
+    id_ciclos TEXT,
+    id_usuario TEXT,
+    PRIMARY KEY (id_ciclos, id_usuario),
+    FOREIGN KEY (id_ciclos) REFERENCES Ciclos (id_ciclos),
+    FOREIGN KEY (id_usuario) REFERENCES Administrador (id_usuario)
+);
