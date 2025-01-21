@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciclos</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Ciclos</h1>
+    <table id="ciclos">
+        <thead>
+            <tr>
+                <th>Id Ciclos</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Duracion</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Filas generadas dinámicamente -->
+        </tbody>
+    </table>
+
+    <script>
+        // Función para obtener los datos de los ciclos
+        async function cargarCiclos() {
+            try {
+                // Obtiene los datos de la tabla ciclos en forma json
+                const response = await fetch('http://localhost:3000/ciclos');
+                if (!response.ok) {
+                    throw new Error(`Error al obtener los ciclos: ${response.statusText}`);
+                }
+                const ciclos = await response.json();                
+                mostrarCiclos(ciclos);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        // Función para cargar los ciclos en la tabla
+        function mostrarCiclos(ciclos) {
+            // Busca el elemento html al que le vamos a agregar los datos
+            const tbody = document.getElementById('ciclos').querySelector('tbody');
+            // Limpiar la tabla antes de agregar nuevos datos
+            tbody.innerHTML = '';
+            ciclos.forEach(ciclo => {
+                const fila = document.createElement('tr');   // crea en el html esta etiqueta = <tr> </tr>
+                // Añadimos el valor de cada campo al interior de un <td> y esto se añade dentro de ^
+                fila.innerHTML = 
+                `
+                    <td>${ciclo.id_ciclos}</td>
+                    <td>${ciclo.nombre}</td>
+                    <td>${ciclo.descripcion}</td>
+                    <td>${ciclo.duracion}</td>
+                    <td><button>editar</button></td>
+                    <td><button>eliminar</button></td>
+                `
+                ;
+                tbody.appendChild(fila);
+            });
+        }
+
+        // Cargar los ciclos al cargar la página
+        cargarCiclos();
+    </script>
+</body>
+</html>
