@@ -5,11 +5,11 @@ const dbPath = '..\\BD\\horariappBD';
 const cors = require('cors'); 
 
 app.use(cors());
-app.get('/pacientes', async (req, res) => {
+app.get('/ciclos', async (req, res) => {
     const db = new sqlite3.Database(dbPath);
     try {
         const rows = await new Promise((resolve, reject) => {
-            db.all('SELECT * FROM Paciente', [], (err, rows) => {
+            db.all('SELECT * FROM Ciclos', [], (err, rows) => {
                 if (err) reject(err);
                 else resolve(rows);
             });
