@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Horarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            font-size: 16px;
+        }
+        input, select {
+            padding: 8px;
+            font-size: 14px;
+            margin-right: 10px;
+            width: 200px;
+        }
+        button {
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        #result {
+            margin-top: 20px;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        #modifyForm {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestión de Horarios de Módulos</h1>
+    
+    <!-- Input para ingresar el ID del módulo -->
+    <label for="moduloId">ID del módulo:</label>
+    <input type="text" id="moduloId" placeholder="Ejemplo: 1">
+    
+    <!-- Botón para obtener los horarios -->
+    <button onclick="getHorarios(document.getElementById('moduloId').value)">Ver Horarios</button>
+    
+    <!-- Lugar donde se mostrarán los horarios -->
+    <div id="result"></div>
+    
+    <!-- Formulario para modificar una sesión -->
+    <div id="modifyForm" style="display: none;">
+        <h3>Modificar Horario</h3>
+        <label for="sesionId">ID de la sesión:</label>
+        <input type="text" id="sesionId" placeholder="Ejemplo: S1">
+        
+        <label for="horaIni">Hora de inicio:</label>
+        <input type="time" id="horaIni">
+        
+        <label for="horaFin">Hora de fin:</label>
+        <input type="time" id="horaFin">
+        
+        <label for="dia">Día:</label>
+        <select id="dia">
+            <option value="lunes">Lunes</option>
+            <option value="martes">Martes</option>
+            <option value="miércoles">Miércoles</option>
+            <option value="jueves">Jueves</option>
+            <option value="viernes">Viernes</option>
+        </select>
+        
+        <label for="aula">Aula:</label>
+        <input type="number" id="aula" placeholder="Número de aula">
+        
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" placeholder="Descripción de la sesión">
+        
+        <button onclick="updateHorario()">Actualizar Sesión</button>
+    </div>
+
+    <script>
+        async function getHorarios(idModulo) {
+            try {
+                if (!idModulo) {
+                    document.getElementById('result').textContent = 'Por favor, ingresa un ID de módulo.';
+                    return;
+                }
+
+                // Asegúrate de que la URL esté correctamente construida para el módulo
+                const response = await fetch(`http://localhost:3000/horarios/${idModulo}`); // Cambia esto a la ruta de horarios para un módulo
+                if (!response.ok) throw new Error('Error en la respuesta del servidor');
+                
+                const data = await response.json(); // Convierte la respuesta a JSON
+                
+                // Si no hay datos, informa que no se encontraron horarios
+                if (data.length === 0) {
+                    document.getElementById('result').textContent = 'No se encontraron horarios para este módulo.';
+                    return;
+                }
+
+                // Muestra los horarios en el elemento con id 'result'
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+
+                // Si los horarios están disponibles, permite modificar uno
+                document.getElementById('modifyForm').style.display = 'block';
+            } catch (error) {
+                // Si hay algún error, muestra el mensaje de error en el elemento con id 'result'
+                document.getElementById('result').textContent = 'Error al cargar los horarios: ' + error.message;
+            }
+        }
+
+        async function updateHorario() {
+            const sesionId = document.getElementById('sesionId').value;
+            const horaIni = document.getElementById('horaIni').value;
+            const horaFin = document.getElementById('horaFin').value;
+            const dia = document.getElementById('dia').value;
+            const aula = document.getElementById('aula').value;
+            const descripcion = document.getElementById('descripcion').value;
+
+            if (!sesionId || !horaIni || !horaFin || !dia || !aula || !descripcion) {
+                document.getElementById('result').textContent = 'Por favor, completa todos los campos.';
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/horarios/${sesionId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        horaIni,
+                        horaFin,
+                        dia,
+                        aula,
+                        descripcion,
+                    }),
+                });
+
+                if (!response.ok) throw new Error('Error al actualizar la sesión');
+                
+                const result = await response.text();
+                document.getElementById('result').textContent = result;
+            } catch (error) {
+                document.getElementById('result').textContent = 'Error al actualizar la sesión: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
