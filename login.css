@@ -1,0 +1,100 @@
+html{
+    height: 100vh;
+}
+
+#header{
+    background-color: #ffffff;
+    color: #235ea1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 
+        inset 5px 5px 5px rgba(35, 94, 161, 1), /* Sombra interna */
+        inset -5px -5px 5px rgba(35, 94, 161, 1); /* Sombra interna */
+}
+
+
+.containerLogo{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.txtLogo{
+    height: 26px;
+}
+
+#header img{
+    width: 100%;
+}
+
+#campos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url(./imagenes/fondoCatedral.png);
+    background-repeat: no-repeat; /* Evita que la imagen se duplique */
+    background-size: 100% 100%; /* Escala la imagen al tamaño del contenedor */
+    background-position: center; /* Centra la imagen */
+}
+
+#botones a:hover{
+    background-color: #2BC187;
+    cursor: pointer;
+    transition: background-color 0.8s ease;
+}
+
+#campos p{
+    color: white;
+}
+
+
+#campos input{
+    border: none;
+    color: #027BC4;
+    border-radius: 10px;
+    padding: 5px;
+    width: 55%;  
+    outline: none;
+    border-bottom: 2px solid #F4791B;
+}
+
+input::placeholder{
+    color:rgb(2, 123, 196);
+}
+
+#campos div a{
+    background-color: #F4791B;
+    color: white;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+}
+
+#first{
+    margin-right: 70px;
+}
+
+#footer{
+    background-color: rgb(2, 123, 196);
+    padding: 20px;
+}
+
+.enlace{
+    text-decoration-color:white;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.enlace a{
+    width: 500px;
+    color: white;
+}
