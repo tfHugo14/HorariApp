@@ -2,6 +2,10 @@ html{
     height: 100vh;
 }
 
+body{
+    background-image: url(./imagenes/fondoCiclos.png);
+}
+
 #header{
     background-color: #ffffff;
     display: flex;
@@ -17,9 +21,6 @@ html{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 
-        inset 5px 5px 5px rgba(35, 94, 161, 1), /* Sombra interna */
-        inset -5px -5px 5px rgba(35, 94, 161, 1); /* Sombra interna */
 }
 
 
@@ -40,5 +41,30 @@ html{
 }
 
 #containerButtons{
-    border: solid 2px black;
+    display: flex;
+    flex-direction: column;
+}
+
+#containerButtons div{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 50%;
+    width: 70%;
+    align-items: center;
+}
+
+#containerButtons div button{
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    height: 60%;
+    border: none;
+    background-color: #2BC187;
+    border-radius: 15%;
+    box-shadow: 3px 3px 8px rgb(0, 0, 0);
+    color: white;
+
 }
