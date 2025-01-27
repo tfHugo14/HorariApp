@@ -1,15 +1,15 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
-const path = require('path'); // Importa el módulo path
+const path = require('path'); 
 
 const app = express();
 const dbPath = 'C:\\Users\\a22angelmm\\Desktop\\ProyectoHorario\\BD\\horariappBD';
 
 app.use(cors());
-app.use(express.json()); // Para manejar solicitudes con JSON
+app.use(express.json()); 
 
-// Tus rutas aquí (ejemplo de ciclos)
+
 app.get('/ciclos', async (req, res) => {
     const db = new sqlite3.Database(dbPath);
     try {
