@@ -97,7 +97,7 @@ async function insertarCiclos() {
         const descripcion = document.getElementById('descripcion').value;
         const id_ciclos = document.getElementById('id_ciclos').value;
         const id_profesor = document.getElementById('id_profesor').value;
-        
+
 
         const data = { id_modulo, nombre, duracion, horas_semanales, descripcion, id_ciclos, id_profesor };
 
@@ -147,6 +147,96 @@ async function eliminarModulo(id_modulo) {
         alert('Hubo un error al intentar eliminar el modulo.');
     }
 }
+
+function editarModulo(id_modulo) {
+    // Seleccionar la fila correspondiente
+    const row = document.querySelector(`.${id_modulo}-editar`).parentNode;
+
+    // Verificar si ya está en modo edición
+    if (row.getAttribute('data-editing') === 'true') {
+        return; // Evitar múltiples ediciones en la misma fila
+    }
+
+    // Cambiar atributo para indicar que está en edición
+    row.setAttribute('data-editing', 'true');
+
+    // Obtener los valores actuales de los campos
+    const columns = row.querySelectorAll('div');
+    const values = Array.from(columns).slice(0, -2).map(col => col.textContent);
+
+    // Reemplazar contenido por campos editables
+    columns[0].innerHTML = `<input type="text" value="${values[0]}" disabled>`; // ID no editable
+    columns[1].innerHTML = `<input type="text" value="${values[1]}">`;
+    columns[2].innerHTML = `<input type="text" value="${values[2]}">`;
+    columns[3].innerHTML = `<input type="text" value="${values[3]}">`;
+    columns[4].innerHTML = `<input type="text" value="${values[4]}">`;
+    columns[5].innerHTML = `<input type="text" value="${values[5]}">`;
+    columns[6].innerHTML = `<input type="text" value="${values[6]}">`;
+
+    // Cambiar el botón de "Editar" por "Aceptar"
+    const editarBtn = row.querySelector(`.${id_modulo}-editar`);
+    editarBtn.innerHTML = `<button>Aceptar</button>`;
+    editarBtn.onclick = () => aceptarEdicion(id_modulo);
+
+    // Deshabilitar el botón de eliminar mientras se edita
+    const eliminarBtn = row.querySelector(`.${id_modulo}-eliminar`);
+    eliminarBtn.querySelector('button').disabled = true;
+}
+
+async function aceptarEdicion(id_modulo) {
+    // Seleccionar la fila correspondiente
+    const row = document.querySelector(`.${id_modulo}-editar`).parentNode;
+
+
+    // Obtener los valores de los campos editables
+    const inputs = row.querySelectorAll('input');
+    const values = Array.from(inputs).map(input => input.value);
+    const data = { id_modulo: values[0], nombre: values[1], duracion: values[2], horas_semanales: values[3], descripcion: values[4], id_ciclos: values[5], id_profesor: values[6] };
+
+    try {
+        const response = await fetch(`http://localhost:3000/updateModulo/${id_modulo}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            alert('Modulo actualizado correctamente');
+            cargarModulos(); // Recargar la lista de ciclos
+        } else {
+            const errorMessage = await response.text();
+            alert(`Error al actualizar el modulo: ${errorMessage}`);
+        }
+    } catch (error) {
+        console.error('Error al actualizar el modulo:', error);
+        alert('Hubo un error al actualizar el modulo.');
+    }
+
+    // Reemplazar los inputs por texto
+    const columns = row.querySelectorAll('div');
+    columns[0].textContent = values[0];
+    columns[1].textContent = values[1];
+    columns[2].textContent = values[2];
+    columns[3].textContent = values[3];
+    columns[4].textContent = values[4];
+    columns[5].textContent = values[5];
+    columns[6].textContent = values[6];
+
+    // Cambiar el botón de "Aceptar" por "Editar"
+    const editarBtn = row.querySelector(`.${id_modulo}-editar`);
+    editarBtn.innerHTML = `<button>Editar</button>`;
+    editarBtn.onclick = () => editarModulo(id_modulo);
+
+    // Habilitar el botón de eliminar
+    const eliminarBtn = row.querySelector(`.${id_modulo}-eliminar`);
+    eliminarBtn.querySelector('button').disabled = false;
+
+    // Remover el atributo de edición
+    row.removeAttribute('data-editing');
+}
+
 
 cargarModulos();
 cargarCiclos();
