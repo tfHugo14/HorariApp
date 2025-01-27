@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Estudiantes</title>
+    <script>
+        async function fetchEstudiantes() {
+            const response = await fetch('http://localhost:3000/estudiantes');
+            const estudiantes = await response.json();
+            const table = document.getElementById('estudiantesTable');
+
+            table.innerHTML = '<tr><th>Nombre</th><th>DNI</th><th>Admin</th></tr>';
+            estudiantes.forEach(estudiante => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${estudiante.nombre}</td>
+                    <td>${estudiante.dni}</td>
+                    <td>${estudiante.esAdmin === 1 ? 'Sí' : 'No'}</td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
+        async function addEstudiante(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const estudiante = Object.fromEntries(formData.entries());
+            estudiante.esAdmin = estudiante.esAdmin === 'on' ? 1 : 0; // Convierte a 1 o 0
+
+            console.log('Datos del estudiante a enviar:', estudiante);
+
+            const response = await fetch('http://localhost:3000/estudiantes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(estudiante)
+            });
+
+            if (response.ok) {
+                fetchEstudiantes();
+                event.target.reset();
+            } else {
+                const errorText = await response.text();
+                alert('Error al agregar estudiante: ' + errorText);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchEstudiantes();
+            document.getElementById('addEstudianteForm').addEventListener('submit', addEstudiante);
+        });
+    </script>
+</head>
+<body>
+    <h1>Gestión de Estudiantes</h1>
+    <table id="estudiantesTable" border="1"></table>
+    <h2>Añadir Nuevo Estudiante</h2>
+    <form id="addEstudianteForm">
+        <label>
+            Nombre:
+            <input type="text" name="nombre" required>
+        </label><br>
+        <label>
+            Contraseña:
+            <input type="password" name="contrasenha" required>
+        </label><br>
+        <label>
+            DNI:
+            <input type="text" name="dni" required>
+        </label><br>
+        <label>
+            Es Admin:
+            <input type="checkbox" name="esAdmin">
+        </label><br>
+        <button type="submit">Añadir Estudiante</button>
+    </form>
+</body>
+</html>
