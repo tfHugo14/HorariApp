@@ -1,3 +1,5 @@
+<!-- URL: http://localhost:3000/estudiantesPage -->
+<!-- Muestra la lista de estudiantes y un formulario para añadir un nuevo estudiante -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,15 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Estudiantes</title>
     <script>
+        function validarDNI(dni) {
+            const letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+            const dniRegex = /^[0-9]{8}[A-Z]$/;
+
+            if (!dniRegex.test(dni)) return false;
+
+            const numero = parseInt(dni.slice(0, 8), 10);
+            const letra = dni.slice(-1);
+            return letra === letras[numero % 23];
+        }
+
         async function fetchEstudiantes() {
             const response = await fetch('http://localhost:3000/estudiantes');
             const estudiantes = await response.json();
             const table = document.getElementById('estudiantesTable');
 
-            table.innerHTML = '<tr><th>Nombre</th><th>DNI</th><th>Admin</th></tr>';
+            table.innerHTML = '<tr><th>ID Usuario</th><th>Nombre</th><th>DNI</th><th>Admin</th></tr>';
             estudiantes.forEach(estudiante => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
+                    <td>${estudiante.id_usuario}</td>
                     <td>${estudiante.nombre}</td>
                     <td>${estudiante.dni}</td>
                     <td>${estudiante.esAdmin === 1 ? 'Sí' : 'No'}</td>
@@ -23,28 +37,39 @@
         }
 
         async function addEstudiante(event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            const formData = new FormData(event.target);
-            const estudiante = Object.fromEntries(formData.entries());
-            estudiante.esAdmin = estudiante.esAdmin === 'on' ? 1 : 0; // Convierte a 1 o 0
+    const formData = new FormData(event.target);
+    const estudiante = Object.fromEntries(formData.entries());
+    estudiante.esAdmin = estudiante.esAdmin === 'on' ? 1 : 0;
 
-            console.log('Datos del estudiante a enviar:', estudiante);
+    if (!validarDNI(estudiante.dni)) {
+        alert("❌ DNI inválido. Introduzca un DNI correcto.");
+        return;
+    }
 
-            const response = await fetch('http://localhost:3000/estudiantes', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(estudiante)
-            });
+    console.log('Datos del estudiante a enviar:', estudiante);
 
-            if (response.ok) {
-                fetchEstudiantes();
-                event.target.reset();
-            } else {
-                const errorText = await response.text();
-                alert('Error al agregar estudiante: ' + errorText);
-            }
+    const response = await fetch('http://localhost:3000/estudiantes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(estudiante)
+    });
+
+    if (response.ok) {
+        alert("✅ Estudiante añadido correctamente.");
+        fetchEstudiantes();
+        event.target.reset();
+    } else {
+        const errorText = await response.text();
+        // Mostrar mensaje personalizado del servidor
+        if (errorText.includes('ID de usuario ya existe')) {
+            alert('❌ Error: El ID de usuario ya existe en la base de datos.');
+        } else {
+            alert('❌ Error al agregar estudiante: ' + errorText);
         }
+    }
+}
 
         document.addEventListener('DOMContentLoaded', () => {
             fetchEstudiantes();
@@ -57,6 +82,10 @@
     <table id="estudiantesTable" border="1"></table>
     <h2>Añadir Nuevo Estudiante</h2>
     <form id="addEstudianteForm">
+        <label>
+            ID Usuario:
+            <input type="text" name="id_usuario" required>
+        </label><br>
         <label>
             Nombre:
             <input type="text" name="nombre" required>
@@ -77,3 +106,4 @@
     </form>
 </body>
 </html>
+
