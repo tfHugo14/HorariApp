@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Módulos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        .table-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .table-header, .table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            align-items: center;
+        }
+
+        .table-header {
+            font-weight: bold;
+            background-color: #e0f7fa;
+        }
+
+        .table-row {
+            background-color: #ffffff;
+        }
+
+        .table-row:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestión de Módulos</h1>
+
+    <!-- Formulario para insertar nuevos módulos -->
+    <div class="form-container">
+        <h2>Agregar Nuevo Módulo</h2>
+        <form id="formModulo">
+            <input type="text" id="id_modulo" placeholder="ID del Módulo" required>
+            <input type="text" id="nombre" placeholder="Nombre del Módulo" required>
+            <input type="text" id="duracion" placeholder="Duración (en semanas)" required>
+            <input type="text" id="horas_semanales" placeholder="Horas Semanales" required>
+            <textarea id="descripcion" placeholder="Descripción del Módulo" rows="4" required></textarea>
+
+            <!-- Menú desplegable para ciclos -->
+            <select id="id_ciclos" required>
+            </select>
+
+            <!-- Menú desplegable para profesores -->
+            <select id="id_profesor" required>
+            </select>
+
+            <button type="submit">Agregar Módulo</button>
+        </form>
+    </div>
+
+    <!-- Contenedor de la tabla con los módulos -->
+    <div class="table-container" id="modulos">
+        <div class="table-header">
+            <div>id_modulo</div>
+            <div>Nombre</div>
+            <div>Duración</div>
+            <div>Horas_semanales</div>
+            <div>Descripción</div>
+            <div>id_ciclos</div>
+            <div>id_profesor</div>
+            <div>Editar</div>
+            <div>Eliminar</div>
+        </div>
+        <!-- Filas generadas dinámicamente -->
+    </div>
+
+    <script src="operacionesModulos.js"></script>
+</body>
+</html>

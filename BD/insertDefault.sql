@@ -14,9 +14,9 @@ INSERT INTO Modulos (id_modulo, duracion, nombre, horas_semanales, descripcion, 
 ('M003', 250, 'SEO y SEM', 8, 'Optimización en buscadores', 'C003', 'P003');
 
 INSERT INTO Sesiones (id_sesiones, hora_ini, hora_fin, dia, aula, descripcion, id_modulos) VALUES
-('S001', '2025-01-20 08:00:00', '2025-01-20 10:00:00', '2025-01-20', 101, 'Clase introductoria', 'M001'),
-('S002', '2025-01-21 10:00:00', '2025-01-21 12:00:00', '2025-01-21', 102, 'Prácticas de redes', 'M002'),
-('S003', '2025-01-22 12:00:00', '2025-01-22 14:00:00', '2025-01-22', 103, 'Taller de SEO', 'M003');
+('S001', '2025-01-20 08:00:00', '2025-01-20 10:00:00', 'Lunes', 101, 'Clase introductoria', 'M001'),
+('S002', '2025-01-21 10:00:00', '2025-01-21 12:00:00', 'Viernes', 102, 'Prácticas de redes', 'M002'),
+('S003', '2025-01-22 12:00:00', '2025-01-22 14:00:00', 'Miercoles', 103, 'Taller de SEO', 'M003');
 
 INSERT INTO Estudiante (id_usuario, nombre, contrasenha, esAdmin, dni) VALUES
 ('E001', 'Carlos Torres', 'pass123', 0, '12345678A'),
