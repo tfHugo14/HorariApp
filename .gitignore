@@ -5,3 +5,6 @@ package-lock.json
 # Ignore node_modules folder
 node_modules/
 .vscode/
+
+# Ignore modified BD
+horariappBD_mod

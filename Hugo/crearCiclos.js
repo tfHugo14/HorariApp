@@ -20,7 +20,7 @@ function mostrarCiclos(ciclos) {
     // Limpiar la el article antes de agregar nuevos datos
     article.innerHTML = '';
     ciclos.forEach(ciclo => {
-        const fila = document.createElement('fieldset');   // crea en el html esta etiqueta = <fieldset> </fieldset>
+        const fila = document.createElement('div');   // crea en el html esta etiqueta = <div> </div>
         fila.id = ciclo.id_ciclos;
         fila.innerHTML = 
         `
@@ -82,18 +82,18 @@ async function eliminarCiclo(id_ciclos) {
 }
 
 async function insertarCiclo(id) {
-    var fieldset = document.getElementById(id);
+    var div = document.getElementById(id);
 
-    if (!fieldset) {
-        console.error(`No se encontró el fieldset con ID: ${id}`);
+    if (!div) {
+        console.error(`No se encontró el div con ID: ${id}`);
         return;
     }
 
     const nuevoCiclo = {
-        "id_ciclos": fieldset.querySelector(`input[name="ciclo-id"]`)?.value || "",
-        "nombre": fieldset.querySelector(`input[name="ciclo-nombre"]`)?.value || "",
-        "descripcion": fieldset.querySelector(`textarea[name="ciclo-descripcion"]`)?.value || "",
-        "duracion": parseInt(fieldset.querySelector(`input[name="ciclo-duracion"]`)?.value, 10) || 0
+        "id_ciclos": div.querySelector(`input[name="ciclo-id"]`)?.value || "",
+        "nombre": div.querySelector(`input[name="ciclo-nombre"]`)?.value || "",
+        "descripcion": div.querySelector(`textarea[name="ciclo-descripcion"]`)?.value || "",
+        "duracion": parseInt(div.querySelector(`input[name="ciclo-duracion"]`)?.value, 10) || 0
     };
 
     console.log("Enviando datos:", nuevoCiclo); // Debug para verificar los datos
@@ -120,7 +120,7 @@ function crearCicloVacio() {
     var art_ciclos = document.getElementById("art_ciclos");
     
     art_ciclos.innerHTML += `
-        <fieldset id="${id_ciclo}">
+        <div id="${id_ciclo}">
             <legend id="id_ciclos" style="align-self: self-start;"></legend>
             
             <p>
@@ -155,6 +155,6 @@ function crearCicloVacio() {
                 <button onclick="insertarCiclo('${id_ciclo}')">guardar</button>
                 <button onclick="eliminarCiclo('${id_ciclo}')">eliminar</button>
             </section>
-        </fieldset>
+        </div>
     `;
 }
