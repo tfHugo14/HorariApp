@@ -1,0 +1,72 @@
+<!-- URL: http://localhost:3000/eliminarEstudiante -->
+<!-- Elimina un estudiante, con búsqueda por DNI -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Estudiante</title>
+    <script>
+        async function eliminarEstudiante(event) {
+            event.preventDefault();
+            const dni = document.getElementById('dniEliminar').value.trim();
+
+            if (!dni) {
+                alert("Ingrese un DNI válido.");
+                return;
+            }
+
+            // Obtener datos del estudiante antes de eliminar
+            const response = await fetch(`http://localhost:3000/estudiantes/${dni}`);
+            if (!response.ok) {
+                alert("❌ Estudiante no encontrado.");
+                return;
+            }
+
+            const estudiante = await response.json();
+
+            // Confirmación de eliminación
+            const confirmacion = confirm(
+                `¿Está seguro de que desea eliminar este estudiante?\n\n` +
+                `ID Usuario: ${estudiante.id_usuario}\n` +
+                `Nombre: ${estudiante.nombre}\n` +
+                `DNI: ${estudiante.dni}\n` +
+                `Admin: ${estudiante.esAdmin === 1 ? 'Sí' : 'No'}`
+            );
+
+            if (!confirmacion) {
+                alert("Operación cancelada.");
+                return;
+            }
+
+            // Proceder con la eliminación
+            const deleteResponse = await fetch(`http://localhost:3000/estudiantes/${dni}`, {
+                method: 'DELETE'
+            });
+
+            if (deleteResponse.ok) {
+                alert("✅ Estudiante eliminado correctamente.");
+                document.getElementById('formEliminar').reset();
+            } else {
+                const errorText = await deleteResponse.text();
+                alert("❌ Error al eliminar estudiante: " + errorText);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('formEliminar').addEventListener('submit', eliminarEstudiante);
+        });
+    </script>
+</head>
+<body>
+    <h1>Eliminar Estudiante</h1>
+    
+    <form id="formEliminar">
+        <label>
+            Ingrese el DNI del estudiante:
+            <input type="text" id="dniEliminar" required>
+        </label>
+        <button type="submit">Eliminar</button>
+    </form>
+</body>
+</html>
