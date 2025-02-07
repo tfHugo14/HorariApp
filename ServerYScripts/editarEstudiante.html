@@ -1,0 +1,104 @@
+<!-- URL: http://localhost:3000/editarEstudiante -->
+<!-- Formulario que permite editar un estudiante, con búsqueda por DNI -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Estudiante</title>
+    <script>
+        async function buscarEstudiante(event) {
+            event.preventDefault();
+            const dni = document.getElementById('dniBuscar').value.trim();
+
+            if (!dni) {
+                alert("Ingrese un DNI válido.");
+                return;
+            }
+
+            const response = await fetch(`http://localhost:3000/estudiantes/${dni}`);
+            if (!response.ok) {
+                alert("Estudiante no encontrado.");
+                return;
+            }
+
+            const estudiante = await response.json();
+            document.getElementById('id_usuario').value = estudiante.id_usuario;
+            document.getElementById('nombre').value = estudiante.nombre;
+            document.getElementById('contrasenha').value = estudiante.contrasenha;
+            document.getElementById('esAdmin').checked = estudiante.esAdmin === 1;
+
+            // Guardar el DNI en un campo oculto para usarlo al guardar
+            document.getElementById('dniOriginal').value = estudiante.dni;
+
+            document.getElementById('formEditar').style.display = 'block';
+        }
+
+        async function guardarEstudiante(event) {
+            event.preventDefault();
+
+            const estudiante = {
+                id_usuario: document.getElementById('id_usuario').value,
+                nombre: document.getElementById('nombre').value,
+                contrasenha: document.getElementById('contrasenha').value,
+                dni: document.getElementById('dniOriginal').value.trim(), // Usar el DNI original
+                esAdmin: document.getElementById('esAdmin').checked ? 1 : 0
+            };
+
+            const response = await fetch(`http://localhost:3000/estudiantes/${estudiante.dni}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(estudiante)
+            });
+
+            if (response.ok) {
+                alert("✅ Estudiante actualizado correctamente.");
+                document.getElementById('formEditar').reset();
+                document.getElementById('formEditar').style.display = 'none';
+            } else {
+                const errorText = await response.text();
+                alert("❌ Error al actualizar estudiante: " + errorText);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('buscarForm').addEventListener('submit', buscarEstudiante);
+            document.getElementById('formEditar').addEventListener('submit', guardarEstudiante);
+        });
+    </script>
+</head>
+<body>
+    <h1>Editar Estudiante</h1>
+    
+    <form id="buscarForm">
+        <label>
+            Ingrese el DNI del estudiante:
+            <input type="text" id="dniBuscar" required>
+        </label>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <form id="formEditar" style="display: none;">
+        <h2>Editar Información</h2>
+        <label>
+            ID Usuario:
+            <input type="text" id="id_usuario" required>
+        </label><br>
+        <label>
+            Nombre:
+            <input type="text" id="nombre" required>
+        </label><br>
+        <label>
+            Contraseña:
+            <input type="password" id="contrasenha" required>
+        </label><br>
+        <!-- DNI oculto en un campo no editable -->
+        <input type="hidden" id="dniOriginal">
+        <label>
+            Es Admin:
+            <input type="checkbox" id="esAdmin">
+        </label><br>
+        <button type="submit">Guardar Cambios</button>
+    </form>
+</body>
+</html>
