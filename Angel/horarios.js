@@ -1,7 +1,6 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
-const path = require('path'); 
 
 const app = express();
 const dbPath = 'C:\\Users\\a22angelmm\\Desktop\\ProyectoHorario\\BD\\horariappBD';
@@ -135,8 +134,7 @@ app.delete('/horarios/:idSesiones', async (req, res) => {
     }
 });
 
-// Servir archivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Iniciar el servidor
 app.listen(3000, () => console.log('Servidor corriendo en http://localhost:3000'));
