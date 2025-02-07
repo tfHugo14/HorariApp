@@ -18,15 +18,15 @@ INSERT INTO Sesiones (id_sesiones, hora_ini, hora_fin, dia, aula, descripcion, i
 ('S002', '2025-01-21 10:00:00', '2025-01-21 12:00:00', 'Viernes', 102, 'Prácticas de redes', 'M002'),
 ('S003', '2025-01-22 12:00:00', '2025-01-22 14:00:00', 'Miercoles', 103, 'Taller de SEO', 'M003');
 
-INSERT INTO Estudiante (id_usuario, nombre, contrasenha, esAdmin, dni) VALUES
-('E001', 'Carlos Torres', 'pass123', 0, '12345678A'),
-('E002', 'Marta Díaz', 'secure456', 0, '87654321B'),
-('E003', 'Sofía Gómez', 'mypwd789', 0, '56789012C');
+INSERT INTO Estudiante (id_usuario, nombre, contrasenha, dni) VALUES
+('E001', 'Carlos Torres', 'pass123', '12345678A'),
+('E002', 'Marta Díaz', 'secure456', '87654321B'),
+('E003', 'Sofía Gómez', 'mypwd789', '56789012C');
 
-INSERT INTO Administrador (id_usuario, nombre, contrasenha, esAdmin, dni) VALUES
-('A001', 'Ricardo Martínez', 'admin123', 1, '23456789D'),
-('A002', 'Laura Fernández', 'admin456', 1, '98765432E'),
-('A003', 'Pedro Sánchez', 'admin789', 1, '34567890F');
+INSERT INTO Administrador (id_usuario, nombre, contrasenha, dni) VALUES
+('A001', 'Ricardo Martínez', 'admin123', '23456789D'),
+('A002', 'Laura Fernández', 'admin456', '98765432E'),
+('A003', 'Pedro Sánchez', 'admin789', '34567890F');
 
 INSERT INTO matricular_ciclo (id_ciclos, id_usuario) VALUES
 ('C001', 'E001'),
