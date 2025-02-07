@@ -44,7 +44,6 @@ CREATE TABLE Administrador (
     id_usuario TEXT PRIMARY KEY,
     nombre TEXT,
     contrasenha TEXT,
-    esAdmin INTEGER,
     dni TEXT
 );
 
