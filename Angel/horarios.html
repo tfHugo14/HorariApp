@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Horarios</title>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -118,7 +118,9 @@
         <input type="text" id="descripcion" placeholder="Descripción de la sesión">
 
         <button onclick="updateHorario()">Actualizar Sesión</button>
+        
     </div>
+    <button onclick="exportToPDF()">Exportar a PDF</button>
 
    <script src="crearHorarios.js"></script>
 </body>
