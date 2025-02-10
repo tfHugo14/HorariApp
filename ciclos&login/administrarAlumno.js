@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const flecha = this.querySelector(".flecha");
 
             if (itemBody.classList.contains("mostrar")) {
-                itemBody.style.maxHeight = itemBody.scrollHeight + "px"; // Fijar altura antes de contraer
+                itemBody.style.maxHeight = itemBody.scrollHeight + "%"; // Fijar altura antes de contraer
                 setTimeout(() => {
                     itemBody.classList.remove("mostrar");
                     itemHeader.classList.remove("abierto");
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 itemBody.classList.add("mostrar");
                 itemHeader.classList.add("abierto");
                 flecha.classList.add("rotar");
-                itemBody.style.maxHeight = itemBody.scrollHeight + "px"; // Expandir suavemente
+                itemBody.style.maxHeight = itemBody.scrollHeight + "%"; // Expandir suavemente
             }
         });
     });

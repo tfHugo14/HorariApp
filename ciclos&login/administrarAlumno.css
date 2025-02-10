@@ -98,12 +98,12 @@
 
 .itemWrapper{
     width: 80%;
-    height: 30%;
+    height: 100%;
 }
 
 .itemHeader{
     width: 100%;
-    height: 25%;
+    height: 10%;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -121,6 +121,7 @@
 
 .itemBody{
   width: 100%;
+  height: 35%;
   background-color: #468DAE;
   border-radius: 0 0 10px 10px;
   display: flex;
@@ -152,7 +153,6 @@
 }
 
 .itemBody.mostrar{
-  max-height: 500px; /* Ajusta según el contenido */
   opacity: 1;
   padding: 10px;
 }
