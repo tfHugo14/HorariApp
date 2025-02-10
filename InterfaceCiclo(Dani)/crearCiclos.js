@@ -6,7 +6,7 @@ async function cargarCiclos() {
         if (!response.ok) {
             throw new Error(`Error al obtener los ciclos: ${response.statusText}`);
         }
-        const ciclos = await response.json();                
+        const ciclos = await response.json();
         mostrarCiclos(ciclos);
     } catch (error) {
         console.error(error);
@@ -16,51 +16,26 @@ async function cargarCiclos() {
 // Función para cargar los ciclos en la seccion
 function mostrarCiclos(ciclos) {
     // Busca el elemento html al que le vamos a agregar los datos
-    const article = document.getElementById('sec_ciclos').querySelector('article');
+    const section = document.getElementById('sectionContainer');
     // Limpiar la el article antes de agregar nuevos datos
-    article.innerHTML = '';
+    section.innerHTML = '';
     ciclos.forEach(ciclo => {
-        const fila = document.createElement('div');   // crea en el html esta etiqueta = <div> </div>
+        const fila = document.createElement('article');   // crea en el html esta etiqueta = <div> </div>
         fila.id = ciclo.id_ciclos;
-        fila.innerHTML = 
-        `
-            <legend id="id_ciclos" style="align-self: self-start;">${ciclo.id_ciclos} - ${ciclo.nombre}</legend>
+        fila.className = "itemWrapper";
 
-            <p>
-                <label for="${ciclo.id_ciclos}-idCiclo"><span>Id: </span>
-                    <strong><span aria-label="required">*</span></strong>
-                </label>
-                <input type="text" id="${ciclo.id_ciclos}-idCiclo" name="ciclo-id" value="${ciclo.id_ciclos}" required></input>
-            </p>
-            
-            <p>
-                <label for="${ciclo.id_ciclos}-nombre"><span>Nombre: </span>
-                    <strong><span aria-label="required">*</span></strong>
-                </label>
-                <input type="text" id="${ciclo.id_ciclos}-nombre" name="ciclo-nombre" value="${ciclo.nombre}" required></input>
-            </p>
-            
-            <p>
-                <label for="${ciclo.id_ciclos}-duracion"><span>Duracion: </span>
-                    <strong><span aria-label="required">*</span></strong>
-                </label>
-                <input type="text" id="${ciclo.id_ciclos}-duracion" name="ciclo-duracion" value="${ciclo.duracion}" required></input>
-            </p>
+        fila.innerHTML = `
+        <div class="itemHeader" id="${ciclo.id_ciclos}">
+            <h3 style="margin: 0;">idCiclo: ${ciclo.id_ciclos}</h3>
+            <button class="boton"><img src="./flecha.png" class="flecha" alt="flecha"></button>
+        </div>
+        <div class="itemBody">
+            <p>Nombre: ${ciclo.nombre}</p>
+            <p>Duración: ${ciclo.duracion}</p>
+            <p>Descripción: ${ciclo.descripcion}</p>
+        </div>`;
 
-            <p>
-                <label for="${ciclo.id_ciclos}-descripcion"><span>Descripcion: </span>
-                    <strong><span aria-label="required">*</span></strong>
-                </label>
-                <textarea type="text" id="${ciclo.id_ciclos}-descripcion" name="ciclo-descripcion" required>${ciclo.descripcion}</textarea>
-            </p>
-
-            <section style="width: 100%;">
-                <button onclick="insertarCiclo('${ciclo.id_ciclos}')">guardar</button>
-                <button onclick="eliminarCiclo('${ciclo.id_ciclos}')">eliminar</button>
-            </section>
-        `
-        ;
-        article.appendChild(fila);
+        section.appendChild(fila);
     });
 }
 
@@ -115,10 +90,11 @@ async function insertarCiclo(id) {
         console.error(error);
     }
 }
+
 function crearCicloVacio() {
     let id_ciclo = prompt("Introduce el ID del ciclo:", "C000");
     var art_ciclos = document.getElementById("art_ciclos");
-    
+
     art_ciclos.innerHTML += `
         <div id="${id_ciclo}">
             <legend id="id_ciclos" style="align-self: self-start;"></legend>
