@@ -1,0 +1,126 @@
+html{
+    height: 100vh;
+}
+
+#header{
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 
+        inset 5px 5px 5px #235EA1,/*#235ea1,/* Sombra interna */
+        inset -5px -5px 5px #235EA1; /* Sombra interna */
+}
+
+body{
+    background-color: #235EA1;
+}
+
+
+.containerLogo{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.txtLogo{
+    height: 26px;
+}
+
+#header img{
+    width: 100%;
+}
+
+#campos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#campos #container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 20px;
+}
+
+#botones a:hover{
+    background-color: #2BC187;
+    cursor: pointer;
+    transition: background-color 0.8s ease;
+}
+
+#campos p{
+   color: #468DAE;
+}
+
+
+#campos input{
+    border: none;
+    color: #027BC4;
+    border-radius: 10px;
+    padding: 5px;
+    width: 55%;  
+    outline: none;
+    border-bottom: 2px solid #468DAE;
+}
+
+input::placeholder{
+    color:rgb(2, 123, 196);
+}
+
+#campos div a{
+    background-color: #F4791B;
+    color: white;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+}
+
+#first{
+    margin-right: 70px;
+}
+
+#footer{
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 
+        inset 5px 5px 5px #235EA1,/*#235ea1,/* Sombra interna */
+        inset -5px -5px 5px #235EA1; /* Sombra interna */
+}
+
+#footer div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.enlaces{
+    color: #027BC4;
+    font-weight: bold;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.enlaces a{
+    text-decoration: none;
+    width: 500px;
+    color: rgb(43, 193, 135);
+    
+}
+
+.enlaces a img{
+    width: 50px;
+    height: 35px;
+}
