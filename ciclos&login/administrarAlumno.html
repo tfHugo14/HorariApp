@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="administrarAlumno.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body id="body">
+        <header id="header"> 
+            <input type="checkbox" role="button" aria-label="Display the menu" class="menu">
+            <img id="logo" class="h-50" src="../imagenes/logo_white.png" alt="">
+        </header>
+        <div id="containerButtons" class="w-100">
+            <div>
+                <button>MAÑANA</button>
+                <button>TARDE</button>
+            </div>
+        </div>
+       <main id="mainContainer">
+            <section id="sectionContainer">
+                <article class="itemWrapper">
+                    <div class="itemHeader">
+                        <h3 style="margin: 0;">Ciclo de DAM</h3>
+                        <button class="boton"><img src="../imagenes/flecha.png" class="flecha" alt="flecha"></button>
+                    </div>
+                    <div class="itemBody">
+                        <div>
+                            <h4>Modulo Y</h4>
+                            <input type="checkbox">
+                        </div>
+                        <div>
+                            <h4>Modulo X</h4>
+                            <input type="checkbox">
+                        </div>
+                        <div>
+                            <h4>Modulo Z</h4>
+                            <input type="checkbox">
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </main>
+        <script src="./administrarAlumno.js"></script>
+    </body>
+</html>
