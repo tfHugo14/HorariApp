@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Función para cambiar el estado de los botones sin modificar su tamaño
     function activarBoton(botonActivo, botonInactivo) {
-        botonActivo.style.backgroundColor = "#1BF49D"; // Verde cuando está seleccionado
+        botonActivo.style.backgroundColor = "rgb(27 244 157 / 63%)"; // Verde cuando está seleccionado
         botonInactivo.style.backgroundColor = "#F4791B"; // Naranja cuando no está seleccionado
         botonActivo.style.transform = "scale(0.8)"; // Mantiene el tamaño reducido
         botonInactivo.style.transform = "scale(1)"; // Vuelve al tamaño normal el otro botón
@@ -36,5 +36,6 @@ function toggleItem(button) {
     const flecha = button.querySelector('.flecha'); // Obtiene la imagen dentro del botón
 
     itemBody.classList.toggle('mostrar'); // Alterna la visibilidad del contenido
+    itemHeader.classList.toggle('abierto');
     flecha.classList.toggle('rotar'); // Alterna la rotación de la flecha
 }
