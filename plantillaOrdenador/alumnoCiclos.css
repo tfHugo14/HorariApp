@@ -204,15 +204,15 @@
     width: 30px;
     height: 20px;
 }
-    
+
 .flecha{
     transition: transform 0.3 ease-in-out;
 }
-    
+
 .flecha.rotar {
     transform: rotate(180deg);
 }
-    
+
 .itemHeader:has(button) + .flecha{
     transform: rotate(180deg);
 }

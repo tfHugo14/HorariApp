@@ -162,61 +162,72 @@ border-radius: 10px 10px 0px 0px;
 }
 
 .itemBody{
-width: 100%;
-background-color: #468DAE;
-border-radius: 0 0 10px 10px;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-overflow: hidden;
-max-height: 0; /* Inicialmente oculto */
-padding: 0px 10px;
-opacity: 0;
-transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out;
+  width: 100%;
+  height: 75%;
+  background-color: #468DAE;
+  border-radius: 0 0 10px 10px;
 }
 
+.itemHeader.abierto{
+  border-radius: 10px 10px 0px 0px;
+}
+  
+.itemBody{
+  width: 100%;
+  background-color: #468DAE;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  max-height: 0; /* Inicialmente oculto */
+  padding: 0px 10px;
+  opacity: 0;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
+  
 .itemBody div{
-padding-left: 5px;
-padding-right: 5px;
-padding-top: 5px;
-background-color: #235EA1;
-display: flex;
-color: white;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-border-radius: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 5px;
+  background-color: #235EA1;
+  display: flex;
+  color: white;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 7px;
 }
-
+  
 .itemBody div input{
-width: 20px;
-height: 20px;
+  width: 20px;
+  height: 20px;
 }
-
+  
 .itemBody.mostrar{
-max-height: 500px; /* Ajusta según el contenido */
-opacity: 1;
-padding: 10px;
+  max-height: 500px; /* Ajusta según el contenido */
+  opacity: 1;
+  padding: 10px;
 }
-
+  
 .boton{
-background-color: unset;
-border: none;
+  background-color: unset;
+  border: none;
 }
-
+  
 .boton img{
-width: 30px;
-height: 20px;
+  width: 30px;
+  height: 20px;
 }
 
 .flecha{
-transition: transform 0.3 ease-in-out;
+  transition: transform 0.3 ease-in-out;
 }
 
 .flecha.rotar {
-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .itemHeader:has(button) + .flecha{
-transform: rotate(180deg);
+  transform: rotate(180deg);
 }

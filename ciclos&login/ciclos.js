@@ -1,28 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const botones = document.querySelectorAll(".boton");
-
-    botones.forEach(boton => {
-        boton.addEventListener("click", function () {
-            const itemHeader = this.closest(".itemHeader"); 
-            const itemBody = itemHeader.nextElementSibling;
-            const flecha = this.querySelector(".flecha");
-
-            if (itemBody.classList.contains("mostrar")) {
-                itemBody.style.maxHeight = itemBody.scrollHeight + "%"; // Fijar altura antes de contraer
-                setTimeout(() => {
-                    itemBody.classList.remove("mostrar");
-                    itemHeader.classList.remove("abierto");
-                    flecha.classList.remove("rotar");
-                }, 10); 
-            } else {
-                itemBody.classList.add("mostrar");
-                itemHeader.classList.add("abierto");
-                flecha.classList.add("rotar");
-                itemBody.style.maxHeight = itemBody.scrollHeight + "%"; // Expandir suavemente
-            }
-        });
-    });
-
     // Nueva funcionalidad para mostrar y ocultar los mainContainers y mantener el botón activo sin cambiar su tamaño
     const btnDistancia = document.querySelector("button:nth-child(1)");
     const btnPresencial = document.querySelector("button:nth-child(2)");
@@ -54,4 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+function toggleItem(button) {
+    const itemHeader = button.closest('.itemHeader'); // Encuentra el itemHeader más cercano
+    const itemBody = itemHeader.nextElementSibling; // Obtiene el div .itemBody que está justo después
+    const flecha = button.querySelector('.flecha'); // Obtiene la imagen dentro del botón
 
+    itemBody.classList.toggle('mostrar'); // Alterna la visibilidad del contenido
+    flecha.classList.toggle('rotar'); // Alterna la rotación de la flecha
+}
