@@ -27,12 +27,16 @@ function mostrarCiclos(ciclos) {
         fila.innerHTML = `
         <div class="itemHeader" id="${ciclo.id_ciclos}">
             <h3 style="margin: 0;">idCiclo: ${ciclo.id_ciclos}</h3>
-            <button class="boton"><img src="./flecha.png" class="flecha" alt="flecha"></button>
+            <button class="boton"><img src="imagenes/flecha.png" class="flecha" alt="flecha"></button>
         </div>
         <div class="itemBody">
             <p>Nombre: ${ciclo.nombre}</p>
             <p>Duración: ${ciclo.duracion}</p>
             <p>Descripción: ${ciclo.descripcion}</p>
+            <div class="botonesCiclo">
+                <button onClick="cargarModulosById('${ciclo.id_ciclos}')" class="verModulos">Modulos</button>
+                <button class="editarCiclo">Editar</button>
+            </div> 
         </div>`;
 
         section.appendChild(fila);
@@ -134,3 +138,4 @@ function crearCicloVacio() {
         </div>
     `;
 }
+cargarCiclos();

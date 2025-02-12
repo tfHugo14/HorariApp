@@ -32,6 +32,7 @@ app.get('/selectProfesores', async (req, res) => {
 // Select
 app.get('/selectModulos', async (req, res) => {
     const db = new sqlite3.Database(dbPath);
+
     try {
         const rows = await new Promise((resolve, reject) => {
             db.all('SELECT * FROM Modulos', [], (err, rows) => {
@@ -47,6 +48,25 @@ app.get('/selectModulos', async (req, res) => {
     }
 });
 
+app.get('/selectModulos/:idCiclo', async (req, res) => {
+    const db = new sqlite3.Database(dbPath);
+    const { idCiclo } = req.params;
+
+    console.log(`Consultando módulos para el ciclo: ${idCiclo}`)
+    try {
+        const rows = await new Promise((resolve, reject) => {
+            db.all('SELECT * FROM Modulos WHERE id_ciclos = ?', [idCiclo], (err, rows) => {
+                if (err) reject(err);
+                else resolve(rows);
+            });
+        });
+        res.json(rows);
+    } catch (error) {
+        res.status(500).send(error.message);
+    } finally {
+        db.close();
+    }
+});
 //Insert 
 app.post('/insertModulo',
     async (req, res) => {

@@ -87,6 +87,7 @@
     height: 70vh;
     width: 90vw;
     margin: 5vw;
+    justify-content: space-between;
 }
 
 #nav {
@@ -104,47 +105,64 @@
 
 #sectionContainer {
     background-color: #E8F0F4;
-    height: 90%;
     width: 100%;
     border-radius: 0px 0px 20px 20px;
     display: flex;
-    justify-content: center;
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
+    padding-bottom: 10px;
+    min-height: fit-content;
+    height: auto;
+    transition: height 0.5s ease-in-out;
 }
 
 .itemWrapper {
     width: 80%;
-    height: 30%;
-    margin-bottom: 30px;
+    height: 100%;
+    margin-bottom: 20px;
+    color: white;
 }
 
 .itemHeader {
     width: 100%;
-    height: 35%;
+    height: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #E8F0F4;
     background-color: #235EA1;
     border-radius: 5px 5px 0 0;
-    padding-left: 10px;
-    padding-right: 10px;
+
+    padding: 10px;
 
 
 }
 
+.itemHeader.abierto {
+    border-radius: 5px 5px 0px 0px;
+}
 
 .itemBody {
     width: 100%;
-    height: auto;
     background-color: #468DAE;
     border-radius: 0 0 10px 10px;
-    padding-left: 10px;
-    max-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    max-height: 0;
+    /* Inicialmente oculto */
+    padding: 0px 10px;
+    opacity: 0;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
+
+.itemBody.mostrar {
+    opacity: 1;
+    padding: 10px;
+    max-height: 600px;
+    margin-bottom: 10px;
 }
 
 
@@ -156,4 +174,120 @@
 .boton img {
     width: 30px;
     height: 20px;
+}
+
+.addBoton {
+    background-color: unset;
+    border: none;
+    outline: none;
+}
+
+.addBoton img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(1.5);
+}
+
+.addBoton:hover img {
+    filter: brightness(1.75);
+    transform: scale(1.15);
+}
+
+.flecha {
+    transition: transform 0.3 ease-in-out;
+}
+
+.flecha.rotar {
+    transform: rotate(180deg);
+}
+
+.itemHeader:has(button)+.flecha {
+    transform: rotate(180deg);
+}
+
+.botonesCiclo {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    display: flex;
+    color: white;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px;
+}
+
+.botonesCiclo button {
+    background-color: #235EA1;
+    color: white;
+    outline: none;
+    border: none;
+}
+
+.verModulos:hover {
+    background-color: rgb(46, 116, 196);
+    transform: scale(1.10);
+}
+
+.editarCiclo:hover {
+    background-color: rgb(46, 116, 196);
+    transform: scale(1.10);
+}
+
+/*  POPUP */
+
+/* Fondo del popup */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Contenido del popup */
+.popup-content {
+    background: white;
+
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Botón de cerrar */
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #235EA1;
+}
+
+.close-popup:hover {
+    color: red;
 }

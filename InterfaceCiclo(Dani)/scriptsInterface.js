@@ -24,4 +24,15 @@ document.addEventListener("click", function (event) {
             }, 300);
         }
     }
+
+    // Manejar la apertura del popup con delegación de eventos
+    if (event.target.closest(".verModulos")) {
+        document.querySelector(".popup-overlay").style.display = "flex";
+    }
+
+    // Cerrar el popup
+    if (event.target.closest(".close-popup") || event.target.classList.contains("popup-overlay")) {
+        document.querySelector(".popup-overlay").style.display = "none";
+    }
 });
+
