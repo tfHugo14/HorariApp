@@ -9,8 +9,17 @@
     </head>
     <body id="body">
         <header id="header"> 
-            <input type="checkbox" role="button" aria-label="Display the menu" class="menu">
-            <img id="logo" class="h-50" src="images/logo_white.png" alt="">
+            <input type="checkbox" role="button" aria-label="Display the menu" class="menu" onclick="showMenu()" id="menuToggle">
+            <img id="logo" class="h-50" src="../imagenes/logo_white.png" alt="">
+            <div id="menuBlock">
+                <p><a href="">Alumnos</a></p>
+                <hr>
+                <p><a href="">Profesores</a></p>
+                <hr>
+                <p><a href="">Modulos</a></p>
+                <hr>
+                <p><a href="">Ciclos</a></p>
+            </div>
         </header>
         <main id="mainContainer">
             <nav id="nav">
@@ -20,12 +29,27 @@
                 <article class="itemWrapper">
                     <div class="itemHeader">
                         <h3 style="margin: 0;">Texto Prueba</h3>
+                        <button class="boton"><img src="../imagenes/flecha.png" class="flecha" alt="flecha"></button>
                     </div>
                     <div class="itemBody">
-                        
+                        <p> helo </p>
                     </div>
                 </article>
             </section>
         </main>
+
+        <script>
+            function showMenu() {
+                let menuBlock = document.getElementById("menuBlock");
+                let menuToggle = document.getElementById("menuToggle");
+                
+                if (menuToggle.checked) {
+                    menuBlock.style.display = "block";
+                } else {
+                    menuBlock.style.display = "none";
+                }
+            }
+        </script>
+        <script src="./administrarAlumno.js"></script>
     </body>
 </html>

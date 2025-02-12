@@ -62,6 +62,36 @@
 
 /* --- */
 
+#menuBlock {
+  display: none;
+  width: 200px;
+  height: 225px;
+  background-color: #468DAE;
+  position: absolute;
+  padding: 5px;
+  top: 80px;
+  left: 40px;
+  border-radius: 5px;
+  -webkit-box-shadow: 4px 5px 2px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 4px 5px 2px 0px rgba(0,0,0,0.75);
+  box-shadow: 4px 5px 2px 0px rgba(0,0,0,0.75);
+}
+
+hr{
+  color: #E8F0F4;
+}
+
+#menuBlock p{
+  margin: 10px;
+}
+
+#menuBlock a{
+  font-weight: bold;
+  color: #E8F0F4;
+  text-decoration: none;
+  padding: 5px;
+}
+
 #body {
     margin:0;
     min-height:100vh;
@@ -108,28 +138,85 @@
     align-items: start;
     padding-top: 20px;
 }
-
 .itemWrapper{
-    width: 80%;
-    height: 30%;
+  width: 80%;
+  height: 30%;
 }
 
 .itemHeader{
-    width: 100%;
-    height: 25%;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    color: #E8F0F4;
-    background-color: #235EA1;
-    border-radius: 10px 10px 0 0;
-    padding-left: 10px;
-    padding-right: 10px;
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  color: #E8F0F4;
+  background-color: #235EA1;
+  border-radius: 10px 10px 10px 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.itemHeader.abierto{
+border-radius: 10px 10px 0px 0px;
 }
 
 .itemBody{
-    width: 100%;
-    height: 75%;
-    background-color: #468DAE;
-    border-radius: 0 0 10px 10px;
+width: 100%;
+background-color: #468DAE;
+border-radius: 0 0 10px 10px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+overflow: hidden;
+max-height: 0; /* Inicialmente oculto */
+padding: 0px 10px;
+opacity: 0;
+transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
+
+.itemBody div{
+padding-left: 5px;
+padding-right: 5px;
+padding-top: 5px;
+background-color: #235EA1;
+display: flex;
+color: white;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+border-radius: 7px;
+}
+
+.itemBody div input{
+width: 20px;
+height: 20px;
+}
+
+.itemBody.mostrar{
+max-height: 500px; /* Ajusta según el contenido */
+opacity: 1;
+padding: 10px;
+}
+
+.boton{
+background-color: unset;
+border: none;
+}
+
+.boton img{
+width: 30px;
+height: 20px;
+}
+
+.flecha{
+transition: transform 0.3 ease-in-out;
+}
+
+.flecha.rotar {
+transform: rotate(180deg);
+}
+
+.itemHeader:has(button) + .flecha{
+transform: rotate(180deg);
 }

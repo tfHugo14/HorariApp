@@ -9,8 +9,17 @@
     </head>
     <body id="body">
         <header id="header"> 
-            <input type="checkbox" role="button" aria-label="Display the menu" class="menu">
+            <input type="checkbox" role="button" aria-label="Display the menu" class="menu" onclick="showMenu()" id="menuToggle">
             <img id="logo" class="h-50" src="../imagenes/logo_white.png" alt="">
+            <div id="menuBlock">
+                <p><a href="">Alumnos</a></p>
+                <hr>
+                <p><a href="">Profesores</a></p>
+                <hr>
+                <p><a href="">Modulos</a></p>
+                <hr>
+                <p><a href="">Ciclos</a></p>
+            </div>
         </header>
         <div id="containerButtons" class="w-100">
             <div>
@@ -66,6 +75,18 @@
                 </article>
             </section>
         </main>
+        <script>
+            function showMenu() {
+                let menuBlock = document.getElementById("menuBlock");
+                let menuToggle = document.getElementById("menuToggle");
+                
+                if (menuToggle.checked) {
+                    menuBlock.style.display = "block";
+                } else {
+                    menuBlock.style.display = "none";
+                }
+            }
+        </script>
         <script src="./ciclos.js"></script>
     </body>
 </html>
