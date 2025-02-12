@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="administrarAlumno.css">
+    <link rel="stylesheet" href="formularioAlumno.css"> <!-- Nuevo CSS para el modal -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body id="body">
+    <header id="header"> 
+        <input type="checkbox" role="button" aria-label="Display the menu" class="menu">
+        <img id="logo" class="h-50" src="images/logo_white.png" alt="">
+    </header>
+    <main id="mainContainer">
+        <nav id="nav">
+            <h2 style="margin: 0;">Edición Estudiantes</h2>
+            <img id="btn_abrir_modal_anadir" src="images/icono_anadir.png" width="60" height="60" style="cursor: pointer;">
+        </nav>
+        <section id="sectionContainer">
+            <article class="itemWrapper">
+                <div class="itemHeader">
+                    <img src="images/icono_eliminar.png" width="50" height="50">
+                    <h3 class ="h3title">idAlumno: [idAlumno]</h3>
+                    <img class="icono_desplegar" src="images/icono_desplegar.png" width="50" height="29">
+                </div>
+                <div class="itemBody">
+                    <ul>
+                        <li>Campo alumno 1</li>
+                        <li>Campo alumno 2</li>
+                        <li>Campo alumno 3</li>
+                        <li>Campo alumno 4</li>
+                    </ul>
+                    <div class="itemBodyBotones"><a href="#">Módulos</a> <a href="#">Editar</a></div>
+                </div>
+            </article>
+
+
+        </section>
+
+    </main>
+
+    <!-- Ventana Modal para Añadir Estudiante -->
+    <div id="modal_anadir_estudiante" class="modal_anadir_estudiante">
+        <div class="modal_anadir_contenido">
+            <span class="cerrar_modal_anadir">&times;</span>
+            <h2>Añadir Estudiante</h2>
+            <form id="formulario_anadir_estudiante">
+                <div class="grupo_formulario">
+                    <label for="idUsuario">ID Usuario</label>
+                    <input type="text" id="idUsuario" name="idUsuario" required>
+                </div>
+                <div class="grupo_formulario">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="grupo_formulario">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="grupo_formulario">
+                    <label for="dni">DNI</label>
+                    <input type="text" id="dni" name="dni" required>
+                </div>
+
+                <button type="submit" class="btn_guardar_estudiante">Añadir Estudiante</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ventana Modal para Editar Estudiante -->
+<div id="modal_editar_estudiante" class="modal_anadir_estudiante">
+    <div class="modal_anadir_contenido">
+        <span class="cerrar_modal_editar">&times;</span>
+        <h2>Editar Estudiante</h2>
+        <form id="formulario_editar_estudiante">
+            <input type="hidden" id="edit_idUsuario" name="edit_idUsuario"> <!-- ID oculto para saber qué estudiante editar -->
+            
+            <div class="grupo_formulario">
+                <label for="edit_nombre">Nombre</label>
+                <input type="text" id="edit_nombre" name="edit_nombre" required>
+            </div>
+            <div class="grupo_formulario">
+                <label for="edit_password">Contraseña</label>
+                <input type="password" id="edit_password" name="edit_password" required>
+            </div>
+            <div class="grupo_formulario">
+                <label for="edit_dni">DNI</label>
+                <input type="text" id="edit_dni" name="edit_dni" required>
+            </div>
+
+            <button type="submit" class="btn_guardar_estudiante">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+<!-- Ventana Modal para Ver Módulos del Alumno -->
+<div id="modal_modulos_alumno" class="modal_anadir_estudiante">
+    <div class="modal_anadir_contenido">
+        <span class="cerrar_modal_modulos">&times;</span>
+        <h2 id="titulo_modulos">Módulos de Alumno</h2>
+        <div id="contenido_modulos">
+            <!-- Aquí se insertará dinámicamente el contenido -->
+        </div>
+    </div>
+</div>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Función para desplegar los datos del alumno
+            document.querySelectorAll(".icono_desplegar").forEach(icono => {
+                icono.addEventListener("click", function () {
+                    const itemBody = this.closest(".itemWrapper").querySelector(".itemBody");
+                    itemBody.classList.toggle("visible");
+
+                    // Cambia el icono según el estado
+                    if (itemBody.classList.contains("visible")) {
+                        this.src = "images/icono_replegar.png"; // Imagen cuando está abierto
+                    } else {
+                        this.src = "images/icono_desplegar.png"; // Imagen cuando está cerrado
+                    }
+                });
+            });
+
+            // Referencias a los elementos del modal de añadir estudiante
+            const modal = document.getElementById("modal_anadir_estudiante");
+            const btnAbrir = document.getElementById("btn_abrir_modal_anadir");
+            const btnCerrar = document.querySelector(".cerrar_modal_anadir");
+
+            // Mostrar el modal al hacer clic en el icono de añadir
+            btnAbrir.addEventListener("click", function () {
+                modal.style.display = "flex"; // Cambia a "flex" en vez de "block" para mantener la alineación correcta
+            });
+
+            // Cerrar el modal al hacer clic en la "X"
+            btnCerrar.addEventListener("click", function () {
+                modal.style.display = "none";
+            });
+
+            // Cerrar el modal si se hace clic fuera del contenido
+            window.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+<!-- Modifica el div itemHeader para que muestre el id de cada estudiante -->
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        try {
+            console.log("Intentando obtener estudiantes...");
+
+            const response = await fetch("http://localhost:3000/estudiantes");
+            if (!response.ok) throw new Error("Error al obtener los estudiantes");
+
+            const estudiantes = await response.json();
+            console.log("Estudiantes obtenidos:", estudiantes);
+
+            const sectionContainer = document.getElementById("sectionContainer");
+
+            // Limpiamos cualquier contenido previo
+            sectionContainer.innerHTML = "";
+
+            estudiantes.forEach(estudiante => {
+                const article = document.createElement("article");
+                article.classList.add("itemWrapper");
+
+                article.innerHTML = `
+                    <div class="itemHeader">
+                        <img src="images/icono_eliminar.png" width="50" height="50">
+                        <h3 style="margin: 0;">idAlumno: ${estudiante.id_usuario}</h3>
+                        <img class="icono_desplegar" src="images/icono_desplegar.png" width="50" height="29" style="cursor: pointer;">
+                    </div>
+                    <div class="itemBody">
+                        <ul>
+                            <li><strong>Nombre:</strong> ${estudiante.nombre}</li>
+                            <li><strong>DNI:</strong> ${estudiante.dni}</li>
+                            <li><strong>Contraseña:</strong> ${estudiante.contrasenha}</li>
+                        </ul>
+                        <div class="itemBodyBotones">
+                            <a href="#">Módulos</a> 
+                            <a href="#">Editar</a>
+                        </div>
+                    </div>
+                `;
+
+                // Agregamos el artículo al DOM
+                sectionContainer.appendChild(article);
+
+                // 🔹 Volvemos a asignar el evento a cada icono desplegable
+                const icono = article.querySelector(".icono_desplegar");
+                const itemBody = article.querySelector(".itemBody");
+
+                icono.addEventListener("click", function () {
+                    itemBody.classList.toggle("visible");
+
+                    // Cambia el icono según el estado
+                    if (itemBody.classList.contains("visible")) {
+                        this.src = "images/icono_replegar.png"; // Imagen cuando está abierto
+                    } else {
+                        this.src = "images/icono_desplegar.png"; // Imagen cuando está cerrado
+                    }
+                });
+            });
+
+            console.log("Estudiantes insertados correctamente en el DOM");
+
+        } catch (error) {
+            console.error("Error al obtener los estudiantes:", error);
+        }
+    });
+</script>
+
+<!-- Añadir estudiante -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const formulario = document.getElementById("formulario_anadir_estudiante");
+
+        formulario.addEventListener("submit", async function (event) {
+            event.preventDefault(); // Evita que el formulario recargue la página
+
+            // Recoger los valores de los inputs
+            const idUsuario = document.getElementById("idUsuario").value;
+            const nombre = document.getElementById("nombre").value;
+            const contrasenha = document.getElementById("password").value;
+            const dni = document.getElementById("dni").value;
+
+            // Crear objeto con los datos del estudiante
+            const nuevoEstudiante = {
+                id_usuario: idUsuario,
+                nombre: nombre,
+                contrasenha: contrasenha,
+                dni: dni
+            };
+
+            try {
+                // Enviar los datos al backend
+                const response = await fetch("http://localhost:3000/estudiantes", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(nuevoEstudiante)
+                });
+
+                const resultado = await response.json();
+
+                if (response.ok) {
+                    alert("✅ Estudiante agregado correctamente!");
+                    formulario.reset(); // Limpiar formulario
+
+                    // 🔹 Agregar nuevo estudiante a la lista sin recargar la página
+                    agregarEstudianteAlDOM(nuevoEstudiante);
+
+                    // Cerrar el modal automáticamente
+                    document.getElementById("modal_anadir_estudiante").style.display = "none";
+                } else {
+                    alert("⚠️ Error: " + resultado);
+                }
+
+            } catch (error) {
+
+            
+            // Mostrar los valores en un alert
+        alert(`Valores recogidos:
+        ID Usuario: ${idUsuario}
+        Nombre: ${nombre}
+        Contraseña: ${contrasenha}
+        DNI: ${dni}`);
+
+                console.error("Error al enviar los datos:", error);
+                alert("⚠️ Error al añadir estudiante. Inténtalo de nuevo.");
+            }
+        });
+
+        function agregarEstudianteAlDOM(estudiante) {
+            const sectionContainer = document.getElementById("sectionContainer");
+
+            const article = document.createElement("article");
+            article.classList.add("itemWrapper");
+
+            article.innerHTML = `
+                <div class="itemHeader">
+                    <img src="images/icono_eliminar.png" width="50" height="50">
+                    <h3 style="margin: 0;">idAlumno: ${estudiante.id_usuario}</h3>
+                    <img class="icono_desplegar" src="images/icono_desplegar.png" width="50" height="29" style="cursor: pointer;">
+                </div>
+                <div class="itemBody">
+                    <ul>
+                        <li><strong>Nombre:</strong> ${estudiante.nombre}</li>
+                        <li><strong>DNI:</strong> ${estudiante.dni}</li>
+                        <li><strong>Contraseña:</strong> ${estudiante.contrasenha}</li>
+                    </ul>
+                    <div class="itemBodyBotones">
+                        <a href="#" class="btn_ver_modulos" data-id-usuario="${estudiante.id_usuario}">Módulos</a> 
+                        <a href="#">Editar</a>
+                    </div>
+                </div>
+            `;
+
+            sectionContainer.appendChild(article);
+
+            // 🔹 Asignar evento de despliegue
+            const icono = article.querySelector(".icono_desplegar");
+            const itemBody = article.querySelector(".itemBody");
+
+            icono.addEventListener("click", function () {
+                itemBody.classList.toggle("visible");
+
+                // Cambia el icono según el estado
+                if (itemBody.classList.contains("visible")) {
+                    this.src = "images/icono_replegar.png"; // Imagen cuando está abierto
+                } else {
+                    this.src = "images/icono_desplegar.png"; // Imagen cuando está cerrado
+                }
+            });
+        }
+    });
+</script>
+
+<!-- Código para editar estudiante -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modalEditar = document.getElementById("modal_editar_estudiante");
+        const formularioEditar = document.getElementById("formulario_editar_estudiante");
+
+        // 🔹 Detectar clic en el botón de "Editar" usando event delegation
+        document.getElementById("sectionContainer").addEventListener("click", function (event) {
+            if (event.target.tagName === "A" && event.target.textContent === "Editar") {
+                event.preventDefault(); // Evita la recarga de la página
+                
+                // Obtener el estudiante correspondiente
+                const estudiante = event.target.closest(".itemWrapper");
+
+                // Extraer los valores del estudiante
+                const idUsuario = estudiante.querySelector("h3").textContent.replace("idAlumno: ", "").trim();
+                const nombre = estudiante.querySelector("ul li:nth-child(1)").textContent.replace("Nombre: ", "").trim();
+                const dni = estudiante.querySelector("ul li:nth-child(2)").textContent.replace("DNI: ", "").trim();
+                const contrasenha = estudiante.querySelector("ul li:nth-child(3)").textContent.replace("Contraseña: ", "").trim();
+
+                // Rellenar el formulario con los datos actuales
+                document.getElementById("edit_idUsuario").value = idUsuario;
+                document.getElementById("edit_nombre").value = nombre;
+                document.getElementById("edit_dni").value = dni;
+                document.getElementById("edit_password").value = contrasenha;
+
+                // Mostrar el modal de edición
+                modalEditar.style.display = "flex";
+            }
+        });
+
+        // Cerrar el modal al hacer clic en la "X"
+        document.querySelector(".cerrar_modal_editar").addEventListener("click", function () {
+            modalEditar.style.display = "none";
+        });
+
+        // Cerrar el modal si se hace clic fuera del contenido
+        window.addEventListener("click", function (event) {
+            if (event.target === modalEditar) {
+                modalEditar.style.display = "none";
+            }
+        });
+
+        // Manejar la actualización de estudiante
+        formularioEditar.addEventListener("submit", async function (event) {
+            event.preventDefault(); // Evita que el formulario recargue la página
+
+            // Obtener los valores editados
+            const idUsuario = document.getElementById("edit_idUsuario").value;
+            const nombre = document.getElementById("edit_nombre").value;
+            const dni = document.getElementById("edit_dni").value;
+            const contrasenha = document.getElementById("edit_password").value;
+
+            const estudianteActualizado = {
+                id_usuario: idUsuario,
+                nombre: nombre,
+                contrasenha: contrasenha,
+                dni: dni
+            };
+
+            try {
+                // Enviar los datos al backend
+                const response = await fetch(`http://localhost:3000/estudiantes/${dni}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(estudianteActualizado)
+                });
+
+                const resultado = await response.json();
+
+                if (response.ok) {
+                    alert("✅ Estudiante actualizado correctamente!");
+                    modalEditar.style.display = "none"; // Cerrar el modal
+                    location.reload(); // Recargar la página para reflejar los cambios
+                } else {
+                    alert("⚠️ Error: " + resultado);
+                }
+
+            } catch (error) {
+                console.error("Error al actualizar los datos:", error);
+                alert("⚠️ Error al actualizar estudiante. Inténtalo de nuevo.");
+            }
+        });
+    });
+</script>
+
+<!-- Manejar la ventana modal de ver módulos de un alumno -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Referencias a los elementos del modal
+    const modalModulos = document.getElementById("modal_modulos_alumno");
+    const contenidoModulos = document.getElementById("contenido_modulos");
+
+    /**
+     * Función para obtener y mostrar los módulos de un estudiante.
+     * @param {string} idUsuario - ID del estudiante seleccionado.
+     */
+    async function mostrarModulosAlumno(idUsuario) {
+        try {
+            // Hacer una petición al backend para obtener los módulos del estudiante
+            const response = await fetch(`http://localhost:3000/modulosEstudiante/${idUsuario}`);
+            if (!response.ok) throw new Error("Error al obtener los módulos del estudiante");
+
+            const ciclos = await response.json();
+            contenidoModulos.innerHTML = ""; // Limpiamos el contenido anterior
+
+            // Recorrer los ciclos y mostrar los módulos correspondientes
+            ciclos.forEach(ciclo => {
+                // Título del ciclo
+                const cicloDiv = document.createElement("div");
+                cicloDiv.innerHTML = `<h3>Ciclo ${ciclo.id_ciclos}: ${ciclo.nombre}</h3>`;
+
+                // Lista de módulos dentro del ciclo
+                const ul = document.createElement("ul");
+                ciclo.modulos.forEach(modulo => {
+                    const li = document.createElement("li");
+                    li.textContent = modulo.nombre;
+                    ul.appendChild(li);
+                });
+
+                cicloDiv.appendChild(ul);
+                contenidoModulos.appendChild(cicloDiv);
+            });
+
+            // Mostrar el modal con los módulos del estudiante
+            modalModulos.style.display = "flex";
+
+        } catch (error) {
+            console.error("Error al obtener los módulos:", error);
+            alert("⚠️ Error al obtener los módulos del estudiante.");
+        }
+    }
+
+    /**
+     * Evento para capturar el clic en el botón "Módulos".
+     * Obtiene el ID del estudiante y abre la ventana modal con los módulos correspondientes.
+     */
+     document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("btn_ver_modulos")) {
+        const idUsuario = event.target.getAttribute("data-id-usuario"); // ✅ Ahora obtenemos el atributo correctamente
+
+        if (!idUsuario) {
+            console.error("❌ Error: No se encontró el ID del usuario en el botón.");
+            alert("⚠️ Error: No se pudo obtener el ID del estudiante.");
+            return;
+        }
+
+        console.log(`🟢 Clic en botón Módulos - ID Usuario: ${idUsuario}`); // ✅ Verifica si se está obteniendo el ID
+        document.getElementById("titulo_modulos").textContent = `Módulos de Alumno ${idUsuario}`;
+        mostrarModulosAlumno(idUsuario);
+    }
+});
+
+});
+
+
+    /**
+     * Evento para cerrar el modal cuando se pulsa la "X".
+     */
+    document.querySelector(".cerrar_modal_modulos").addEventListener("click", function () {
+        modalModulos.style.display = "none";
+    });
+
+    /**
+     * Evento para cerrar el modal cuando se hace clic fuera de él.
+     */
+    window.addEventListener("click", function (event) {
+        if (event.target === modalModulos) {
+            modalModulos.style.display = "none";
+        }
+    });
+});
+
+</script>
+    
+</body>
+</html>
