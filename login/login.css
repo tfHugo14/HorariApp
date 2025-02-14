@@ -1,0 +1,124 @@
+#body {
+    margin:0;
+    min-height:100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+    background-color: #235EA1;
+}
+
+#figuraDiv{
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    justify-content: end;
+    width: 30%;
+    height: 100%;
+    left: 70vw;
+}
+
+#figuraLogo{
+    width: 60vh;
+    z-index: 0;
+}
+
+#header{
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-self: start;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 20px;
+    z-index: 20;
+}
+
+#redes{
+    width: 30px;
+    height: 30px;
+}
+
+#wrapper{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+
+#mainContainer{
+    z-index: 99;
+    height: 90vh;
+    width: 75vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#nav{
+    background-color: #468DAE;
+    height: 10%;
+    width: 100%;
+    border-radius: 20px 20px 0px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding: 10px;
+    color: #E8F0F4;
+}
+
+#sectionContainer{
+    background-color: #E8F0F4;
+    height: 45%;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 20px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#loginArticle{
+    width: 90%;
+    height: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+#loginArticle h3{
+    color: #235EA1;
+}
+
+#sectionContainer button{
+    margin-top: 20px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    background: #F4791B;
+    color: #FFFFFF;
+    border-radius: 8px;
+    padding: 14px 24px 16px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
+    transition: color 0.2s ease,box-shadow 0.2s ease;
+}
+
+#sectionContainer button:hover{
+    box-shadow: 0 6px 20px rgb(93 93 93 / 70%);
+}
+
+#loginArticle input{
+    background-color: #E8F0F4;
+    border: 0;
+    border-bottom: 2px solid #235EA1;
+    outline: none;
+}
