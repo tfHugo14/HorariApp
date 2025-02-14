@@ -4,5 +4,6 @@ function toggleItem(button) {
     const flecha = button.querySelector('.flecha'); // Obtiene la imagen dentro del botón
 
     itemBody.classList.toggle('mostrar'); // Alterna la visibilidad del contenido
+    itemHeader.classList.toggle('abierto')
     flecha.classList.toggle('rotar'); // Alterna la rotación de la flecha
 }

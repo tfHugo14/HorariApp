@@ -52,7 +52,6 @@ app.get('/selectModulos/:idCiclo', async (req, res) => {
     const db = new sqlite3.Database(dbPath);
     const { idCiclo } = req.params;
 
-    console.log(`Consultando módulos para el ciclo: ${idCiclo}`)
     try {
         const rows = await new Promise((resolve, reject) => {
             db.all('SELECT * FROM Modulos WHERE id_ciclos = ?', [idCiclo], (err, rows) => {
@@ -376,6 +375,24 @@ app.delete('/ciclos/:id', async (req, res) => {
             });
         });
         res.status(200).send('Ciclo deleted successfully.');
+    } catch (error) {
+        res.status(500).send(error.message);
+    } finally {
+        db.close();
+    }
+});
+app.put('/updateCiclo/:id', async (req, res) => {
+    const { id } = req.params;
+    const { nombre, duracion, descripcion } = req.body;
+    const db = new sqlite3.Database(dbPath);
+    try {
+        await new Promise((resolve, reject) => {
+            db.run('UPDATE Ciclos SET nombre = ? , duracion = ?, descripcion = ? WHERE id_ciclos = ?', [nombre,duracion,descripcion,id], function (err) {
+                if (err) reject(err);
+                else resolve(this.changes); // Devuelve cuántas filas fueron modificadas
+            });
+        });
+        res.send('Ciclo actualizado correctamente');
     } catch (error) {
         res.status(500).send(error.message);
     } finally {
