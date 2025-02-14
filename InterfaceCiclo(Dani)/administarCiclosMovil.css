@@ -235,7 +235,6 @@
 }
 
 /*  POPUP */
-
 /* Fondo del popup */
 .popup-overlay {
     position: fixed;
@@ -250,30 +249,38 @@
     z-index: 1000;
 }
 
-/* Contenido del popup */
+/* Contenedor del popup */
 .popup-content {
     background: white;
-
-    padding: 20px;
+    padding: 0;
+    /* Quitamos padding para que el header no se vea afectado */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     text-align: center;
     max-width: 400px;
-    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* Para organizar header y body */
     animation: fadeIn 0.3s ease-in-out;
+    overflow: hidden;
+    /* Evita desbordamiento */
 }
 
-/* Animación de entrada */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
+/* Header del popup */
+.popup-header {
+    background-color: #235EA1;
+    padding: 15px;
+    position: relative;
+    text-align: left;
+    color: white;
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+}
+
+.popupModulo {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid black;
 }
 
 /* Botón de cerrar */
@@ -285,9 +292,114 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #235EA1;
+    color: white;
 }
 
 .close-popup:hover {
     color: red;
+}
+
+/* Cuerpo del popup */
+.popup-body {
+    padding: 20px;
+    min-height: 100px;
+    /* Asegura que el cuerpo tenga espacio */
+    text-align: center;
+}
+
+/*  Form */
+/* Estilo para el formulario */
+form {
+    background-color: #E8F0F4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form legend {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #235EA1;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+/* Estilo para los campos de entrada */
+form p {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+form label {
+    font-size: 1rem;
+    color: #235EA1;
+}
+
+form input[type="text"],
+form textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #468DAE;
+    border-radius: 5px;
+    width: 100%;
+    background-color: white;
+    color: #235EA1;
+}
+
+form input[type="text"]:focus,
+form textarea:focus {
+    border-color: #235EA1;
+    outline: none;
+}
+
+form input[type="text"]::placeholder,
+form textarea::placeholder {
+    color: #aaa;
+}
+
+/* Estilo para los botones */
+form button {
+    background-color: #235EA1;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 80%;
+}
+
+form button:hover {
+    background-color: #468DAE;
+    transform: scale(1.05);
+}
+
+/* Estilo para los campos requeridos */
+form span[aria-label="required"] {
+    color: red;
+    font-weight: bold;
+}
+
+/* Estilo para el texto del área de descripción */
+form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.deleteCiclo {
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    color: rgb(255, 0, 55);
+    font-weight: bold;
 }

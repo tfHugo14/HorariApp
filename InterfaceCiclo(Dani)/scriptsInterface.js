@@ -34,5 +34,9 @@ document.addEventListener("click", function (event) {
     if (event.target.closest(".close-popup") || event.target.classList.contains("popup-overlay")) {
         document.querySelector(".popup-overlay").style.display = "none";
     }
+    if (event.target.closest(".addIcon")) {
+        crearCicloVacio();
+        document.querySelector(".popup-overlay").style.display = "flex";
+    }
 });
 
