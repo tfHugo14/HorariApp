@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Alumnado>
+    <Centro>
+        <Nombre>IES San Clemente</Nombre>
+        <CodigoCentro>15006141</CodigoCentro>
+        <Direccion>
+            <Calle>Rúa San Clemente, s/n</Calle>
+            <Ciudad>Santiago de Compostela</Ciudad>
+            <CodigoPostal>15705</CodigoPostal>
+            <Provincia>A Coruña</Provincia>
+        </Direccion>
+		<Telefonos>
+			<Telefono>881867501</Telefono>
+			<Telefono>881867502</Telefono>
+		</Telefonos>
+        <Email>ies.sanclemente@edu.xunta.gal</Email>
+    </Centro>
+	<Alumnos>
+        <Alumno>
+            <ID>0001</ID>
+            <Nombre>María</Nombre>
+			<Apellido>González Fernández</Apellido>
+            <DNI>12345678X</DNI>
+            <FechaNacimiento>15-03-2006</FechaNacimiento>
+            <Genero>F</Genero>
+            <Direccion>
+                <Calle>Rúa do Vilar, 10</Calle>
+                <Ciudad>Santiago de Compostela</Ciudad>
+                <CodigoPostal>15701</CodigoPostal>
+                <Provincia>A Coruña</Provincia>
+            </Direccion>
+            <Telefono>654123456</Telefono>
+            <Email>maria.gonzalez@iessanclemente.net</Email>
+        </Alumno>
+		<Alumno>
+            <ID>4321</ID>
+            <Nombre>Pedro</Nombre>
+			<Apellido>López Martínez</Apellido>
+            <DNI>23456789Y</DNI>
+            <FechaNacimiento>20-07-2005</FechaNacimiento>
+            <Genero>M</Genero>
+            <Direccion>
+                <Calle>Avenida de Lugo, 45</Calle>
+                <Ciudad>Santiago de Compostela</Ciudad>
+                <CodigoPostal>15702</CodigoPostal>
+                <Provincia>A Coruña</Provincia>
+            </Direccion>
+            <Telefono>655987654</Telefono>
+            <Email>pedro.lopez@iessanclemente.net</Email>
+        </Alumno>
+	</Alumnos>
+</Alumnado>
