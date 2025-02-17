@@ -1,128 +1,155 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Horarios</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Horarios</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
-        h1 {
-            text-align: center;
-        }
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      padding: 20px; 
+      background-color: #f8f9fa; 
+    }
+    
+    h1 { 
+      text-align: center; 
+      margin-bottom: 20px; 
+    }
 
-        label {
-            font-size: 16px;
-        }
+    label { font-size: 16px; }
+    input, select { 
+      padding: 8px; 
+      font-size: 14px; 
+      margin-right: 10px; 
+      width: 200px; 
+    }
 
-        input,
-        select {
-            padding: 8px;
-            font-size: 14px;
-            margin-right: 10px;
-            width: 200px;
-        }
+    button { 
+      padding: 8px 16px; 
+      font-size: 14px; 
+      cursor: pointer; 
+      margin-top: 10px; 
+      margin-right: 5px;
+    }
 
-        button {
-            padding: 8px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+    .container { 
+      max-width: 900px; 
+      background: white; 
+      padding: 20px; 
+      border-radius: 8px; 
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
 
-        #result {
-            margin-top: 20px;
-            background-color: #f4f4f4;
-            padding: 10px;
-            border-radius: 5px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            max-width: 100%;
-            overflow-x: auto;
-        }
+    #result, #sessionsContainer { 
+      margin-top: 20px; 
+      background-color: #ffffff; 
+      padding: 10px; 
+      border-radius: 5px; 
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      max-width: 100%; 
+      overflow-x: auto; 
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin-top: 20px; 
+    }
 
-        table,
-        th,
-        td {
-            border: 1px solid #ccc;
-        }
+    table, th, td { 
+      border: 1px solid #ddd; 
+    }
 
-        th,
-        td {
-            padding: 10px;
-            text-align: center;
-        }
+    th, td { 
+      padding: 12px; 
+      text-align: center; 
+    }
 
-        th {
-            background-color: #f0f0f0;
-        }
+    th { 
+      background-color: #343a40; 
+      color: white; 
+    }
 
-        #modifyForm {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-        }
-    </style>
+    #modifyForm { 
+      margin-top: 20px; 
+      padding: 10px; 
+      background-color: #e0e0e0; 
+      border-radius: 5px; 
+      display: none; 
+    }
+
+    /* Estilos para los encabezados de la tabla de horarios */
+    th:nth-child(2) { background-color: #FFC107; color: black; } /* Lunes */
+    th:nth-child(3) { background-color: #17A2B8; color: white; } /* Martes */
+    th:nth-child(4) { background-color: #28A745; color: white; } /* Miércoles */
+    th:nth-child(5) { background-color: #DC3545; color: white; } /* Jueves */
+    th:nth-child(6) { background-color: #6610F2; color: white; } /* Viernes */
+
+    /* Estilos para las celdas de la tabla */
+    td:nth-child(2) { background-color: #FFECB3; } /* Lunes */
+    td:nth-child(3) { background-color: #D1ECF1; } /* Martes */
+    td:nth-child(4) { background-color: #D4EDDA; } /* Miércoles */
+    td:nth-child(5) { background-color: #F8D7DA; } /* Jueves */
+    td:nth-child(6) { background-color: #E5D3FC; } /* Viernes */
+
+  </style>
 </head>
-
 <body>
-    <h1>Gestión de Horarios de Módulos</h1>
 
-    <!-- Input para ingresar el ID del módulo -->
-    <label for="moduloId">ID del módulo:</label>
-    <input type="text" id="moduloId" placeholder="Ejemplo: 1">
+  <h1>Gestión de Horarios</h1>
 
-    <!-- Botón para obtener los horarios -->
-    <button onclick="getHorarios(document.getElementById('moduloId').value)">Ver Horarios</button>
+  <div class="container">
+    <div class="mb-3">
+      <label for="alumnoId" class="form-label">ID del Alumno:</label>
+      <input type="text" id="alumnoId" class="form-control" placeholder="Ejemplo: E001">
+    </div>
 
-    <!-- Lugar donde se mostrarán los horarios -->
+    <button class="btn btn-primary" onclick="getHorariosAlumno()">📅 Ver Horario</button>
+    <button class="btn btn-info" onclick="getSesionesAlumno()">📜 Ver Sesiones</button>
+    <button class="btn btn-secondary" onclick="exportToPDF()">📥 Exportar a PDF</button>
+
+    <!-- Contenedor del Horario -->
     <div id="result"></div>
 
-    <!-- Formulario para modificar una sesión -->
-    <div id="modifyForm" style="display: none;">
-        <h3>Modificar Horario</h3>
-        <label for="sesionId">ID de la sesión:</label>
-        <input type="text" id="sesionId" placeholder="Ejemplo: S1">
+    <!-- Contenedor para ver sesiones -->
+    <div id="sessionsContainer"></div>
 
-        <label for="horaIni">Hora de inicio:</label>
-        <input type="time" id="horaIni">
+    <!-- Formulario para modificar sesión -->
+    <div id="modifyForm">
+      <h3>Modificar Sesión</h3>
+      <label for="sesionId">ID de la sesión:</label>
+      <input type="text" id="sesionId" readonly>
 
-        <label for="horaFin">Hora de fin:</label>
-        <input type="time" id="horaFin">
+      <label for="horaIni">Hora de inicio:</label>
+      <input type="time" id="horaIni">
 
-        <label for="dia">Día:</label>
-        <select id="dia">
-            <option value="lunes">Lunes</option>
-            <option value="martes">Martes</option>
-            <option value="miércoles">Miércoles</option>
-            <option value="jueves">Jueves</option>
-            <option value="viernes">Viernes</option>
-        </select>
+      <label for="horaFin">Hora de fin:</label>
+      <input type="time" id="horaFin">
 
-        <label for="aula">Aula:</label>
-        <input type="number" id="aula" placeholder="Número de aula">
+      <label for="dia">Día:</label>
+      <select id="dia">
+        <option value="lunes">Lunes</option>
+        <option value="martes">Martes</option>
+        <option value="miércoles">Miércoles</option>
+        <option value="jueves">Jueves</option>
+        <option value="viernes">Viernes</option>
+      </select>
 
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" placeholder="Descripción de la sesión">
+      <label for="aula">Aula:</label>
+      <input type="number" id="aula" placeholder="Número de aula">
 
-        <button onclick="updateHorario()">Actualizar Sesión</button>
-        
+      <label for="descripcion">Descripción:</label>
+      <input type="text" id="descripcion" placeholder="Descripción de la sesión">
+
+      <button class="btn btn-warning" onclick="updateHorario()">⚙️ Actualizar Sesión</button>
     </div>
-    <button onclick="exportToPDF()">Exportar a PDF</button>
+  </div>
+  <script src="crearHorarios.js"></script>
 
-   <script src="crearHorarios.js"></script>
 </body>
-
 </html>

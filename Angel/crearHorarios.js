@@ -1,184 +1,241 @@
-async function getHorarios(idModulo) {
-    try {
-        if (!idModulo) {
-            document.getElementById('result').textContent = 'Por favor, ingresa un ID de módulo.';
-            return;
-        }
+// Función para obtener y mostrar el horario completo de un alumno
+async function getHorariosAlumno() {
+  const idAlumno = document.getElementById("alumnoId").value;
+  if (!idAlumno) {
+      alert("Por favor, ingresa un ID de alumno.");
+      return;
+  }
 
-        const response = await fetch(`http://localhost:3000/horarios/${idModulo}`);
-        if (!response.ok) throw new Error('Error en la respuesta del servidor');
+  try {
+      const response = await fetch(`http://localhost:3000/horariosAlumno/${idAlumno}`);
+      if (!response.ok) throw new Error("Error en la respuesta del servidor");
+      const sesiones = await response.json();
+      console.log("Sesiones del alumno:", sesiones);
 
-        const sesiones = await response.json();
-        console.log("📌 Respuesta del servidor:", sesiones);
+      if (sesiones.length === 0) {
+          document.getElementById("result").innerHTML = "<p>No se encontraron horarios para este alumno.</p>";
+          return;
+      }
 
-        // Verificar la estructura de una sesión
-        if (sesiones.length > 0) {
-            console.log("📌 Estructura de una sesión:", sesiones[0]);
-        }
+      // Definir los días de la semana y los rangos horarios fijos
+      const diasSemana = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
+      const horariosDisponibles = ['08:00 - 10:00', '10:00 - 12:00', '12:00 - 14:00', '14:00 - 16:00'];
 
-        // Definir los días de la semana y los rangos de horas
-        const diasSemana = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
-        const horariosDisponibles = ['08:00 - 10:00', '10:00 - 12:00', '12:00 - 14:00', '14:00 - 16:00'];
+      // Colores para cada día
+      const coloresDias = {
+          'lunes': '#FFC107',    // Amarillo
+          'martes': '#17A2B8',   // Azul
+          'miércoles': '#28A745', // Verde
+          'jueves': '#DC3545',   // Rojo
+          'viernes': '#6610F2'   // Morado
+      };
 
-        // Crear estructura vacía de la tabla
-        const horarios = {};
-        horariosDisponibles.forEach(rango => {
-            horarios[rango] = { lunes: '', martes: '', miércoles: '', jueves: '', viernes: '' };
-        });
+      // Crear objeto para el horario con todos los rangos y días definidos, inicialmente vacíos
+      const schedule = {};
+      horariosDisponibles.forEach(rango => {
+          schedule[rango] = {};
+          diasSemana.forEach(dia => {
+              schedule[rango][dia] = "";  // celda vacía
+          });
+      });
 
-        // **Llenar la estructura con las sesiones recibidas**
-        sesiones.forEach(sesion => {
-            console.log("🔹 Procesando sesión:", sesion);
+      // Rellenar la estructura con las sesiones obtenidas
+      sesiones.forEach(sesion => {
+          const horaInicio = sesion.hora_ini.slice(11, 16);
+          const horaFin = sesion.hora_fin.slice(11, 16);
+          const rangoHoras = `${horaInicio} - ${horaFin}`;
+          const dia = sesion.dia.toLowerCase();
+          if (!diasSemana.includes(dia)) return;
 
-            const diaSemana = sesion.dia.toLowerCase(); // El día ya viene en formato texto
-            if (!diasSemana.includes(diaSemana)) return; // Ignorar si el día no es válido
+          const nombreModulo = sesion.nombre_modulo || "Módulo no disponible";
 
-            // Obtener solo la hora en formato HH:MM
-            const horaInicio = sesion.hora_ini.slice(11, 16);
-            const horaFin = sesion.hora_fin.slice(11, 16);
-            const rangoHoras = `${horaInicio} - ${horaFin}`;
+          if (schedule[rangoHoras][dia] !== "") {
+              schedule[rangoHoras][dia] += "<br>" + nombreModulo;
+          } else {
+              schedule[rangoHoras][dia] = nombreModulo;
+          }
+      });
 
-            console.log(`✅ Asignando sesión al día ${diaSemana} en horario ${rangoHoras}`);
+      console.log("Datos generados para la tabla:", schedule);
 
-            // Si el horario coincide con uno de los definidos, lo insertamos
-            if (horarios[rangoHoras]) {
-                // **Mostrar el nombre del módulo desde la respuesta del servidor**
-                const nombreModulo = sesion.nombre_modulo || "Módulo no disponible";
-                horarios[rangoHoras][diaSemana] = nombreModulo;
-            }
-        });
+      // Generar la tabla HTML con colores dinámicos
+      let tableHTML = `
+      <table class="table table-bordered">
+          <thead>
+              <tr>
+                  <th>Hora</th>
+                  <th style="background-color: ${coloresDias['lunes']}; color: black;">Lunes</th>
+                  <th style="background-color: ${coloresDias['martes']}; color: white;">Martes</th>
+                  <th style="background-color: ${coloresDias['miércoles']}; color: white;">Miércoles</th>
+                  <th style="background-color: ${coloresDias['jueves']}; color: white;">Jueves</th>
+                  <th style="background-color: ${coloresDias['viernes']}; color: white;">Viernes</th>
+              </tr>
+          </thead>
+          <tbody>
+      `;
 
-        console.log("📊 Datos generados para la tabla:", horarios);
+      horariosDisponibles.forEach(rango => {
+          tableHTML += `<tr><td>${rango}</td>`;
+          diasSemana.forEach(dia => {
+              const colorFondo = coloresDias[dia];
+              tableHTML += `<td style="background-color: ${colorFondo}; color: white;">${schedule[rango][dia] || ''}</td>`;
+          });
+          tableHTML += "</tr>";
+      });
 
-        // **Crear la tabla HTML**
-        const table = document.createElement('table');
-        table.innerHTML = `
-            <tr>
-                <th>Hora</th>
-                <th>Lunes</th>
-                <th>Martes</th>
-                <th>Miércoles</th>
-                <th>Jueves</th>
-                <th>Viernes</th>
-            </tr>
-        `;
-
-        // **Insertar filas con los datos**
-        Object.keys(horarios).forEach(rangoHoras => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${rangoHoras}</td>
-                <td>${horarios[rangoHoras].lunes || ''}</td>
-                <td>${horarios[rangoHoras].martes || ''}</td>
-                <td>${horarios[rangoHoras].miércoles || ''}</td>
-                <td>${horarios[rangoHoras].jueves || ''}</td>
-                <td>${horarios[rangoHoras].viernes || ''}</td>
-            `;
-            table.appendChild(row);
-        });
-
-        // **Insertar la tabla en el HTML**
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = ''; // Limpiar antes de agregar la nueva tabla
-        resultDiv.appendChild(table);
-        console.log("✅ Tabla añadida al DOM.");
-
-        // **Mostrar formulario de modificación**
-        document.getElementById('modifyForm').style.display = 'block';
-    } catch (error) {
-        console.error("❌ Error:", error);
-        document.getElementById('result').textContent = 'Error al cargar los horarios: ' + error.message;
-    }
+      tableHTML += "</tbody></table>";
+      document.getElementById("result").innerHTML = tableHTML;
+  } catch (error) {
+      console.error("Error al obtener horarios del alumno:", error);
+      document.getElementById("result").innerHTML = "Error: " + error.message;
+  }
 }
-
 
 function exportToPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(14);
+  doc.text("Horarios del Alumno", 15, 15);
 
-    // Título del documento
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(15);
-    doc.text("Horarios de Módulo", 20, 20);
+  let y = 30;
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(12);
 
-    let y = 30; // Iniciamos la posición Y para la tabla
+  // Seleccionar la tabla generada en #result
+  const table = document.querySelector("#result table");
+  if (!table || table.rows.length === 0) {
+      alert("No hay horarios disponibles para exportar.");
+      return;
+  }
 
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
+  const headers = Array.from(table.rows[0].cells).map(cell => cell.textContent);
+  const data = [];
+  
+  // Obtener filas de la tabla
+  for (let i = 1; i < table.rows.length; i++) {
+      const row = table.rows[i];
+      const rowData = Array.from(row.cells).map(cell => cell.textContent);
+      data.push(rowData);
+  }
 
-    // Seleccionamos la tabla con id 'result' y aseguramos que tiene datos
-    const table = document.querySelector("#result table");
+  doc.autoTable({
+      head: [headers], 
+      body: data,
+      startY: y,
+      styles: { fillColor: [255, 255, 255] }, // Evita el error de color
+      headStyles: { fillColor: [100, 100, 100], textColor: [255, 255, 255] }, // Encabezado en gris
+      alternateRowStyles: { fillColor: [240, 240, 240] }, // Filas alternas gris claro
+  });
 
-    // Si no existe la tabla o está vacía, mostramos un mensaje
-    if (!table || table.rows.length === 0) {
-        alert("No hay horarios disponibles para exportar.");
-        return;
-    }
-
-    // Definir los anchos de las columnas (ajustar según sea necesario)
-    const colWidths = [30, 35, 35, 35, 35, 35]; // Ajuste de los anchos para las columnas (en milímetros)
-    const marginLeft = 2.5;  // Márgenes para el contenido
-    const cellPadding = 4;  // Espaciado interno de las celdas
-
-    // Escribimos las cabeceras de la tabla en el PDF
-    const headers = Array.from(table.rows[0].cells).map(cell => cell.textContent);
-
-    // Dibujar cabeceras
-    let x = marginLeft;
-    headers.forEach((header, index) => {
-        doc.text(header, x + cellPadding, y + cellPadding, { maxWidth: colWidths[index] - 2 * cellPadding });
-        x += colWidths[index];
-    });
-    y += 10; // Aumentamos la posición Y después de las cabeceras
-
-    // Dibujar líneas de la tabla para las cabeceras
-    x = marginLeft;
-    doc.line(marginLeft, y, marginLeft + colWidths.reduce((a, b) => a + b, 0), y); // Línea horizontal
-    headers.forEach((_, index) => {
-        doc.line(x, y - 10, x, y); // Líneas verticales
-        x += colWidths[index];
-    });
-
-    // Recorremos las filas de la tabla (empezando desde la fila 1, que contiene los datos)
-    for (let i = 1; i < table.rows.length; i++) {
-        const row = table.rows[i];
-        const cells = Array.from(row.cells).map(cell => cell.textContent);
-
-        // Calcular el alto de la fila basado en el contenido
-        let maxLines = 1;
-        cells.forEach((cell, index) => {
-            const textLines = doc.splitTextToSize(cell, colWidths[index] - 2 * cellPadding);
-            if (textLines.length > maxLines) {
-                maxLines = textLines.length;
-            }
-        });
-
-        // Dibujar las celdas de la fila
-        x = marginLeft;
-        cells.forEach((cell, index) => {
-            const textLines = doc.splitTextToSize(cell, colWidths[index] - 2 * cellPadding);
-            textLines.forEach((line, lineIndex) => {
-                doc.text(line, x + cellPadding, y + cellPadding + lineIndex * 10, { maxWidth: colWidths[index] - 2 * cellPadding });
-            });
-            // Dibujar líneas verticales
-            doc.line(x, y, x, y + maxLines * 10);
-            x += colWidths[index];
-        });
-
-        // Dibujar línea horizontal al final de la fila
-        doc.line(marginLeft, y + maxLines * 10, x, y + maxLines * 10);
-        y += maxLines * 10; // Aumentamos la posición Y para la siguiente fila
-
-        // Si llegamos al final de la página, añadimos una nueva
-        if (y > 260) {
-            doc.addPage();
-            y = 20; // Reiniciamos la posición Y
-        }
-    }
-
-    // Dibujar la línea vertical final de la tabla
-    doc.line(marginLeft + colWidths.reduce((a, b) => a + b, 0), 30, marginLeft + colWidths.reduce((a, b) => a + b, 0), y);
-
-    // Finalmente, guardamos el archivo PDF
-    doc.save("Horario.pdf");
+  doc.save("HorarioAlumno.pdf");
 }
+
+// Función para obtener y mostrar las sesiones de un alumno
+async function getSesionesAlumno() {
+  const idAlumno = document.getElementById("alumnoId").value; 
+  if (!idAlumno) {
+    alert("Por favor, ingresa un ID de alumno.");
+    return;
+  }
+
+  // Actualizamos el contenedor "result" con un mensaje inicial
+  const resultContainer = document.getElementById("result");
+  resultContainer.innerHTML = "<p>Cargando sesiones...</p>";
+
+  try {
+    const response = await fetch(`http://localhost:3000/sesionesAlumno/${idAlumno}`);
+    if (!response.ok) throw new Error("Error en la respuesta del servidor");
+
+    const sesiones = await response.json();
+    console.log("Sesiones obtenidas:", sesiones); 
+    mostrarSesiones(sesiones); 
+  } catch (error) {
+    console.error("Error al obtener sesiones del alumno:", error);
+    alert("Error al obtener sesiones del alumno: " + error.message);
+  }
+}
+
+function mostrarSesiones(sesiones) {
+  const container = document.getElementById("sessionsContainer");
+  
+  // Limpiar cualquier contenido previo
+  container.innerHTML = '';
+  
+  // Si no hay sesiones, mostramos un mensaje
+  if (sesiones.length === 0) {
+    container.innerHTML = '<p>No se encontraron sesiones para este alumno.</p>';
+    return;
+  }
+
+  // Creamos una tabla para mostrar las sesiones
+  const table = document.createElement("table");
+  const tableHeader = `
+    <thead>
+      <tr>
+        <th>ID Sesión</th>
+        <th>Hora de Inicio</th>
+        <th>Hora de Fin</th>
+        <th>Día</th>
+        <th>Aula</th>
+        <th>Descripción</th>
+        <th>Nombre Módulo</th>
+        <th>Nombre Ciclo</th>
+        <th>Profesor</th>
+      </tr>
+    </thead>
+  `;
+  
+  table.innerHTML = tableHeader; 
+
+  const tableBody = document.createElement("tbody");
+
+  sesiones.forEach(sesion => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${sesion.id_sesiones}</td>
+      <td>${sesion.hora_ini}</td>
+      <td>${sesion.hora_fin}</td>
+      <td>${sesion.dia}</td>
+      <td>${sesion.aula}</td>
+      <td>${sesion.descripcion_sesion}</td>
+      <td>${sesion.nombre_modulo}</td>
+      <td>${sesion.nombre_ciclo}</td>
+      <td>${sesion.nombre_profesor || 'Sin Profesor'}</td>
+    `;
+
+    // Añadir un evento para mostrar el formulario de modificación cuando se hace clic en la fila
+    row.onclick = () => {
+      mostrarFormularioModificar(sesion);
+    };
+
+    tableBody.appendChild(row); 
+  });
+
+  table.appendChild(tableBody); 
+  container.appendChild(table); 
+}
+
+function mostrarFormularioModificar(sesion) {
+  const modifyForm = document.getElementById("modifyForm");
+  const sesionIdInput = document.getElementById("sesionId");
+  const horaIniInput = document.getElementById("horaIni");
+  const horaFinInput = document.getElementById("horaFin");
+  const diaInput = document.getElementById("dia");
+  const aulaInput = document.getElementById("aula");
+  const descripcionInput = document.getElementById("descripcion");
+
+  // Asignamos los valores de la sesión seleccionada al formulario
+  sesionIdInput.value = sesion.id_sesiones;
+  horaIniInput.value = sesion.hora_ini;
+  horaFinInput.value = sesion.hora_fin;
+  diaInput.value = sesion.dia;
+  aulaInput.value = sesion.aula;
+  descripcionInput.value = sesion.descripcion_sesion;
+
+  // Mostramos el formulario de modificación
+  modifyForm.style.display = 'block';
+}
+// Llamar a la función cuando el usuario hace clic en el botón
+document.getElementById("btnObtenerSesiones").addEventListener("click", getSesionesAlumno);
