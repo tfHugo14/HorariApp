@@ -27,7 +27,7 @@ function mostrarCiclos(ciclos) {
 
         fila.innerHTML = `
         <div class="itemHeader" id="${ciclo.id_ciclos}Header">
-         <button class="deleteCiclo">&times;</button>
+         <button class="deleteCiclo" onclick="eliminarCiclo('${ciclo.id_ciclos}')">&times;</button>
             <h3 style="margin: 0;">idCiclo: ${ciclo.id_ciclos}</h3>
             <button class="boton"><img src="imagenes/flecha.png" class="flecha" alt="flecha"></button>
         </div>
@@ -104,37 +104,36 @@ function crearCicloVacio() {
     popupHeader.innerHTML = 'Añade un ciclo:';
     container.innerHTML = '';
     container.innerHTML += `
-        <form id="${id_ciclo}">
-    <legend id="id_ciclos">Formulario Ciclo</legend>
-    
-    <p>
-        <label for="${id_ciclo}-idCiclo"><span>Id: </span>
-        </label>
-        <input type="text" id="${id_ciclo}-idCiclo" name="ciclo-id" value="${id_ciclo}" required></input>
-    </p>
+    <form id="${id_ciclo}">
+        <legend id="id_ciclos">Formulario Ciclo</legend>        
+        <p>
+            <label for="${id_ciclo}-idCiclo"><span>Id: </span>
+            </label>
+            <input type="text" id="${id_ciclo}-idCiclo" name="ciclo-id" value="${id_ciclo}" required></input>
+        </p>
 
-    <p>
-        <label for="${id_ciclo}-nombre"><span>Nombre: </span>
-        </label>
-        <input type="text" id="${id_ciclo}-nombre" name="ciclo-nombre" value="" required></input>
-    </p>
-    
-    <p>
-        <label for="${id_ciclo}-duracion"><span>Duración: </span>
-        </label>
-        <input type="text" id="${id_ciclo}-duracion" name="ciclo-duracion" value="" required></input>
-    </p>
+        <p>
+            <label for="${id_ciclo}-nombre"><span>Nombre: </span>
+            </label>
+            <input type="text" id="${id_ciclo}-nombre" name="ciclo-nombre" value="" required></input>
+        </p>
+        
+        <p>
+            <label for="${id_ciclo}-duracion"><span>Duración: </span>
+            </label>
+            <input type="number" id="${id_ciclo}-duracion" name="ciclo-duracion" value="" required></input>
+        </p>
 
-    <p>
-        <label for="${id_ciclo}-descripcion"><span>Descripción: </span>
-        </label>
-        <textarea type="text" id="${id_ciclo}-descripcion" name="ciclo-descripcion" required></textarea>
-    </p>
+        <p>
+            <label for="${id_ciclo}-descripcion"><span>Descripción: </span>
+            </label>
+            <textarea type="text" id="${id_ciclo}-descripcion" name="ciclo-descripcion" required></textarea>
+        </p>
 
-    <section style="width: 100%;">
-        <button onclick="insertarCiclo('${id_ciclo}')">guardar</button>
-    </section>
-</form>
+        <section style="width: 100%;">
+            <button onclick="insertarCiclo('${id_ciclo}')">guardar</button>
+        </section>
+    </form>
     `;
 }
 // Editar 
