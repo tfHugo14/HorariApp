@@ -1,0 +1,144 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variables CSS para colores y fuentes */
+:root {
+    --Naranja: #f4791b;
+    --NaranjaClaro: #FA9446;
+    --Verde: #2BC187;
+    --VerdeClaro: #1BF4A1;
+    --AzulOscuro: #235EA1;
+    --Azul: #468DAE;
+    --AzulClaro: #649CB7;
+    --BlancoAzulOscuro: #D2E5EE;
+    --BlancoAzul: #E8F0F4;
+
+    --fontPrimaria: 'Arial', sans-serif;
+    --fontSecundaria: 'Arial', serif;
+}
+
+/* Estilos globales */
+
+header{
+    width: 100vw !important;
+    height: 7vh !important;
+}
+
+.logo{
+    position: absolute !important;
+    width: 30vw !important;
+    min-width: 5vh !important;
+    height: 5vh !important;
+    margin-left: 1% !important;
+    margin-top: 10px !important;
+
+    background: url(../../imagenes/logo_white.png) !important;
+    background-size:contain !important; /* Ajusta la imagen al tamaño del div */
+    background-repeat: no-repeat !important;
+    background-position: center !important; /* Centrar la imagen */
+}
+
+.redes{
+    position: absolute !important;
+    right: 0px !important;
+    width: 15vw !important;
+    min-width: 5vh !important;
+    height: 5vh !important;
+    margin-right: 1% !important;
+    margin-top: 10px !important;
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(25%, 1fr)) !important;
+    align-items: center !important;
+    justify-items: center !important;
+
+}#fb{
+    width: fit-content !important;
+    columns: 1 !important;
+}#ing{
+    columns: 2 !important;
+}#tw{
+    columns: 3 !important;
+}#yt{
+    columns: 4 !important;
+}
+
+body {
+    margin:0 !important;
+    max-width: 100vw !important;
+    width: 100vw !important;
+    min-height: 100vh !important;
+    height: 100vh !important;
+    font-family: var(--fontPrimaria) !important;
+    background-color: var(--AzulOscuro) !important;
+}
+
+.imgFondo{
+    background-image: url('../../imagenes/LogoFigura2.png') !important;
+    background-size: contain !important; /* Ajusta la imagen al tamaño del div */
+    background-position: center !important; /* Centrar la imagen */
+    background-repeat: no-repeat !important;
+    position: absolute !important;
+    width: 30vw !important;
+    height: 90vh !important;
+    right: 1px !important;
+    bottom: 1px !important;
+    z-index: 0 !important;
+}
+
+footer{
+    width: 100vw !important;
+    height: 2vh !important;
+    position: absolute !important;
+    bottom: 0px !important;
+
+    text-align: start !important;
+    font-size: small !important;
+    text-decoration: none !important;
+    color: var(--BlancoAzul) !important;
+}#maps{
+    color: var(--BlancoAzul) !important;
+    margin-left: 20px !important;
+}
+
+
+
+/* Clases reutilizables */
+.canva {
+    background-color: var(--BlancoAzul) !important;
+}
+
+.btn {
+    display: inline-block !important;
+    padding: 10px 20px !important;
+    text-decoration: none !important;
+    border-radius: 5px !important;
+    font-weight: bold !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+}
+
+.sideButton{
+    background-color: var(--Naranja);
+    border-radius: 0px 5px 5px 0;
+    width: 60%;
+    margin-bottom: 20px;
+    transition: width 0.4s ease-in-out;
+}.sideButton:hover{
+
+}.sideButtonSelected{
+   
+}.sideButtonSelected:hover{
+    
+}
