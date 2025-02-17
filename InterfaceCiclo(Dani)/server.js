@@ -364,7 +364,6 @@ app.post('/ciclos', async (req, res) => {
 });
 
 app.delete('/ciclos/:id', async (req, res) => {
-    console.log("Intentando eliminar ID:", req.params.id);
     const { id } = req.params;
     const db = new sqlite3.Database(dbPath);
     try {

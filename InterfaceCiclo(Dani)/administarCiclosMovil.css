@@ -250,22 +250,25 @@
 }
 
 /* Contenedor del popup */
+/* Contenedor del popup */
 .popup-content {
     background: white;
     padding: 0;
-    /* Quitamos padding para que el header no se vea afectado */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     text-align: center;
     max-width: 400px;
     width: 100%;
+    max-height: 600px;
+    /* Altura máxima */
     display: flex;
     flex-direction: column;
-    /* Para organizar header y body */
     animation: fadeIn 0.3s ease-in-out;
     overflow: hidden;
-    /* Evita desbordamiento */
+    /* Evita que el header se vea afectado */
 }
+
+
 
 /* Header del popup */
 .popup-header {
@@ -299,11 +302,13 @@
     color: red;
 }
 
-/* Cuerpo del popup */
+/* Cuerpo del popup con scroll */
 .popup-body {
     padding: 20px;
-    min-height: 100px;
-    /* Asegura que el cuerpo tenga espacio */
+    max-height: 500px;
+    /* Ajusta para dejar espacio al header */
+    overflow-y: auto;
+    /* Scroll si el contenido excede */
     text-align: center;
 }
 
@@ -342,7 +347,7 @@ form label {
     color: #235EA1;
 }
 
-form input[type="text"],
+form input,
 form textarea {
     padding: 10px;
     font-size: 1rem;
@@ -351,15 +356,17 @@ form textarea {
     width: 100%;
     background-color: white;
     color: #235EA1;
+    font-weight: 500;
 }
 
-form input[type="text"]:focus,
+form input:focus,
 form textarea:focus {
     border-color: #235EA1;
     outline: none;
+    background-color: #eaf8ff;
 }
 
-form input[type="text"]::placeholder,
+form input::placeholder,
 form textarea::placeholder {
     color: #aaa;
 }
@@ -390,8 +397,17 @@ form span[aria-label="required"] {
 
 /* Estilo para el texto del área de descripción */
 form textarea {
-    min-height: 150px;
+    width: 100%;
+    height: 120px;
+    /* Ajusta la altura según el número de líneas deseadas */
     resize: vertical;
+    /* Permite redimensionar verticalmente */
+    overflow-y: auto;
+    /* Scroll solo si es necesario */
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .deleteCiclo {
