@@ -24,7 +24,7 @@
         <section id="sectionContainer">
             <article class="itemWrapper">
                 <div class="itemHeader">
-                    <img src="images/icono_eliminar.png" width="50" height="50">
+                    <img src="images/icono_eliminar.png" width="50" height="50" class="icono_eliminar">
                     <h3 class="h3title">idAlumno: [idAlumno]</h3>
                     <img class="icono_desplegar" src="images/icono_desplegar.png" width="50" height="29">
                 </div>
@@ -176,7 +176,7 @@
 
                     article.innerHTML = `
                     <div class="itemHeader">
-                        <img src="images/icono_eliminar.png" width="50" height="50">
+                        <img src="images/icono_eliminar.png" width="50" height="50" class="icono_eliminar">
                         <h3 style="margin: 0;">idAlumno: ${estudiante.id_usuario}</h3>
                         <img class="icono_desplegar" src="images/icono_desplegar.png" width="50" height="29" style="cursor: pointer;">
                     </div>
@@ -290,7 +290,7 @@
 
                 article.innerHTML = `
                 <div class="itemHeader">
-                    <img src="images/icono_eliminar.png" width="50" height="50">
+                    <img src="images/icono_eliminar.png" width="50" height="50" class="icono_eliminar">
                     <h3 style="margin: 0;">idAlumno: ${estudiante.id_usuario}</h3>
                     <img class="icono_desplegar" src="images/icono_desplegar.png" width="50" height="29" style="cursor: pointer;">
                 </div>
@@ -502,6 +502,58 @@
                 modalModulos.style.display = "none";
             }
         });
+
+    </script>
+
+    <script>
+// Modificar el script de la interfaz para manejar la eliminación de estudiantes
+
+document.addEventListener("DOMContentLoaded", function () {
+    const sectionContainer = document.getElementById("sectionContainer");
+
+    sectionContainer.addEventListener("click", async function (event) {
+        if (event.target.tagName === "IMG" && event.target.classList.contains("icono_eliminar")) {
+            const estudiante = event.target.closest(".itemWrapper");
+            const idUsuario = estudiante.querySelector("h3").textContent.replace("idAlumno: ", "").trim();
+            const dniElement = estudiante.querySelector("ul li:nth-child(2)");
+            
+            if (!dniElement) {
+                console.error("❌ No se encontró el elemento del DNI en la estructura HTML");
+                alert("⚠️ No se pudo encontrar el DNI del estudiante.");
+                return;
+            }
+
+            const dni = dniElement.textContent.replace("DNI: ", "").trim();
+            
+            if (!dni) {
+                console.error("❌ DNI vacío o no encontrado");
+                alert("⚠️ No se pudo obtener el DNI del estudiante.");
+                return;
+            }
+
+            if (!confirm(`¿Seguro que deseas eliminar al estudiante con ID: ${idUsuario} y DNI: ${dni}?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/estudiantes/${dni}`, {
+                    method: "DELETE"
+                });
+
+                if (!response.ok) {
+                    const errorMessage = await response.text();
+                    throw new Error(errorMessage || "Error desconocido al eliminar el estudiante");
+                }
+
+                alert("✅ Estudiante eliminado correctamente!");
+                estudiante.remove(); // Elimina el elemento de la interfaz sin recargar la página
+            } catch (error) {
+                console.error("Error al eliminar estudiante:", error);
+                alert("⚠️ No se pudo eliminar el estudiante. Error: " + error.message);
+            }
+        }
+    });
+});
 
     </script>
 

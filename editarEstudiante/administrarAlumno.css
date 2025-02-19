@@ -1,155 +1,268 @@
 .menu {
-    --s: 40px; /* control the size */
-    --c: #E8F0F4; /* the color */
-    
-    height: var(--s);
-    aspect-ratio: 1;
-    border: none;
-    padding: 0;
-    border-inline: calc(var(--s)/2) solid #0000; 
-    box-sizing: content-box;
-    --_g1: linear-gradient(var(--c) 20%,#0000 0 80%,var(--c) 0) 
-           no-repeat content-box border-box;
-    --_g2: radial-gradient(circle closest-side at 50% 12.5%,var(--c) 95%,#0000) 
-           repeat-y content-box border-box;
-    background: 
-      var(--_g2) left  var(--_p,0px) top,
-      var(--_g1) left  calc(var(--s)/10 + var(--_p,0px)) top,
-      var(--_g2) right var(--_p,0px) top,
-      var(--_g1) right calc(var(--s)/10 + var(--_p,0px)) top;
-    background-size: 
-      20% 80%,
-      40% 100%;
-    position: relative;
-    clip-path: inset(0 25%);
-    -webkit-mask: linear-gradient(90deg,#0000,#000 25% 75%,#0000);
-    cursor: pointer;
-    transition: 
-      background-position .3s var(--_s,.3s), 
-      clip-path 0s var(--_s,.6s);
-    -webkit-appearance:none;
-    -moz-appearance:none;
-    appearance:none;
-  }
-  .menu:before,
-  .menu:after {
-    content:"";
-    position: absolute;
-    border-radius: var(--s);
-    inset: 40% 0;
-    background: var(--c);
-    transition: transform .3s calc(.3s - var(--_s,.3s));
-  }
+  --s: 40px; /* control the size */
+  --c: #E8F0F4; /* the color */
   
-  .menu:checked {
-    clip-path: inset(0);
-    --_p: calc(-1*var(--s));
-    --_s: 0s;
-  }
-  .menu:checked:before {
-    transform: rotate(45deg);
-  }
-  .menu:checked:after {
-    transform: rotate(-45deg);
-  }
-  .menu:focus-visible {
-    clip-path: none;
-    -webkit-mask: none;
-    border: none;
-    outline: 2px solid var(--c);
-    outline-offset: 5px;
-  }
+  height: var(--s);
+  aspect-ratio: 1;
+  border: none;
+  padding: 0;
+  border-inline: calc(var(--s)/2) solid #0000; 
+  box-sizing: content-box;
+  --_g1: linear-gradient(var(--c) 20%,#0000 0 80%,var(--c) 0) 
+         no-repeat content-box border-box;
+  --_g2: radial-gradient(circle closest-side at 50% 12.5%,var(--c) 95%,#0000) 
+         repeat-y content-box border-box;
+  background: 
+    var(--_g2) left  var(--_p,0px) top,
+    var(--_g1) left  calc(var(--s)/10 + var(--_p,0px)) top,
+    var(--_g2) right var(--_p,0px) top,
+    var(--_g1) right calc(var(--s)/10 + var(--_p,0px)) top;
+  background-size: 
+    20% 80%,
+    40% 100%;
+  position: relative;
+  clip-path: inset(0 25%);
+  -webkit-mask: linear-gradient(90deg,#0000,#000 25% 75%,#0000);
+  cursor: pointer;
+  transition: 
+    background-position .3s var(--_s,.3s), 
+    clip-path 0s var(--_s,.6s);
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+}
+.menu:before,
+.menu:after {
+  content:"";
+  position: absolute;
+  border-radius: var(--s);
+  inset: 40% 0;
+  background: var(--c);
+  transition: transform .3s calc(.3s - var(--_s,.3s));
+}
+
+.menu:checked {
+  clip-path: inset(0);
+  --_p: calc(-1*var(--s));
+  --_s: 0s;
+}
+.menu:checked:before {
+  transform: rotate(45deg);
+}
+.menu:checked:after {
+  transform: rotate(-45deg);
+}
+.menu:focus-visible {
+  clip-path: none;
+  -webkit-mask: none;
+  border: none;
+  outline: 2px solid var(--c);
+  outline-offset: 5px;
+}
 
 /* --- */
 
 #body {
-    margin:0;
-    min-height:100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: #235EA1;
+  margin:0;
+  min-height:100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #235EA1;
 }
 
 #header{
-    height: 10vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: nowrap;
-    padding: 20px;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 20px;
 }
 
 #mainContainer{
-    height: 70vh;
-    width: 90vw;
-    margin: 5vw;
+  height: 70vh;
+  width: 90vw;
+  margin: 5vw;
 }
 
 #nav{
-    background-color: #468DAE;
-    height: 10%;
-    width: 100%;
-    border-radius: 20px 20px 0px 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    padding: 10px;
-    color: #E8F0F4;
+  background-color: #468DAE;
+  height: 10%;
+  width: 100%;
+  border-radius: 20px 20px 0px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  padding: 10px;
+  color: #E8F0F4;
 }
 
 #sectionContainer{
-    background-color: #E8F0F4;
-    height: 90%;
-    width: 100%;
-    border-radius: 0px 0px 20px 20px;
-    display: flex;
-    flex-direction:column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 20px;
+  background-color: #E8F0F4;
+  height: 90%;
+  width: 100%;
+  border-radius: 0px 0px 20px 20px;
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
 }
 
 .itemWrapper{
-    width: 80%;
-    min-height:auto;
-    margin-bottom: 5px;
+  width: 80%;
+  min-height:auto;
+  margin-bottom: 18px; /* Define espacio entre filas */
 /*    height: 30%; */
 }
 
 .itemHeader{
-    width: 100%;
-    height: 40px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    color: #E8F0F4;
-    background-color: #235EA1;
-    border-radius: 10px 10px 0 0;
-    padding-left: 10px;
-    padding-right: 10px;
+  width: 100%;
+  height: 54px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  color: #E8F0F4;
+  background-color: #235EA1;
+  border-radius: 10px 10px 0 0;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .itemBody {
-  display: none; /* Oculto por defecto */
-  width: 100%;
-  height: 75%;
-  background-color: #468DAE;
-  border-radius: 0 0 10px 10px;
-  padding: 10px;
-  transition: max-height 0.3s ease-out;
+display: none; /* Oculto por defecto */
+width: 100%;
+height: 78%;
+background-color: #468DAE;
+border-radius: 0 0 10px 10px;
+padding: 10px;
+transition: max-height 0.3s ease-out;
 }
 
 /* Mostrar cuando tenga la clase .visible */
 .itemBody.visible {
-  display: block;
+display: block;
 }
 
 .icono_desplegar {
-  margin-left: auto;
+margin-left: auto;
+}
+
+.icono_eliminar {
+  cursor: pointer;
 }
 
 .h3title {
-  margin: 0;
+margin: 0;
 }
 
+/* Estilos para la ventana modal de añadir estudiante */
+.modal_anadir_estudiante {
+display: none; /* Asegura que el modal esté oculto al cargar la página */
+position: fixed;
+z-index: 1000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+/*    display: flex;  /* Se activa con JS */ 
+justify-content: center;
+align-items: center;
+}
+
+/* Contenedor del contenido del modal */
+.modal_anadir_contenido {
+position: absolute;
+top: 50%;
+left: 50%;
+background-color: #E8F0F4;
+padding: 20px;
+border-radius: 10px;
+width: 80%;
+color: #235EA1;
+text-align: center;
+transform: translate(-50%, -50%); /* Lo centra completamente */
+}
+
+@media(min-width:480px){
+.modal_anadir_contenido {
+  width: 480px;
+}
+}
+
+
+/* Botón para cerrar el modal */
+.cerrar_modal_anadir {
+position: absolute;
+right: 15px;
+top: 15px;
+font-size: 30px;
+cursor: pointer;
+color: #235EA1;
+}
+
+.cerrar_modal_anadir:hover {
+color: #1E4D8A;
+}
+
+/* Estilos del formulario */
+#formulario_anadir_estudiante {
+display: flex;
+flex-direction: column;
+gap: 10px;
+padding: 15px;
+}
+
+.grupo_formulario {
+display: flex;
+flex-direction: column;
+text-align: left;
+}
+
+.grupo_formulario label {
+font-size: 14px;
+font-weight: bold;
+color: #235EA1;
+}
+
+.grupo_formulario input {
+padding: 8px;
+border: none;
+border-radius: 5px;
+background-color: #FFFFFF;
+color: #235EA1;
+font-size: 14px;
+}
+
+.check_grupo {
+display: flex;
+align-items: center;
+gap: 5px;
+}
+
+.btn_guardar_estudiante {
+background-color: #235EA1;
+color: white;
+padding: 10px;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.btn_guardar_estudiante:hover {
+background-color: #1E4D8A;
+}
+
+
+.itemBodyBotones a {
+margin:0.6rem;
+color:white;
+text-decoration:none;
+background-color: #235ea1;
+padding:0.4rem;
+border: 1px solid black;
+}
