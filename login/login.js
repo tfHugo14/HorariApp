@@ -41,6 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        alert("Acceso concedido");
+
+        if (checkCredentials()) {
+            setError(passwordInput);
+            alert("Contraseña incorrecta");
+        } else {
+            alert("Acceso concedido");
+        }
+
     });
 });
