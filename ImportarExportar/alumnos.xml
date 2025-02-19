@@ -17,7 +17,7 @@
     </Centro>
 	<Alumnos>
         <Alumno>
-            <ID>0001</ID>
+            <ID>0002</ID>
             <Nombre>María</Nombre>
 			<Apellido>González Fernández</Apellido>
             <DNI>12345678X</DNI>
@@ -33,7 +33,7 @@
             <Email>maria.gonzalez@iessanclemente.net</Email>
         </Alumno>
 		<Alumno>
-            <ID>4321</ID>
+            <ID>4322</ID>
             <Nombre>Pedro</Nombre>
 			<Apellido>López Martínez</Apellido>
             <DNI>23456789Y</DNI>
