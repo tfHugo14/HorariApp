@@ -10,7 +10,17 @@ app.use(express.json());
 // app.use(express.static(path.join(__dirname, 'public')));
 
 // ******************  LOGIN ESTUDIANTE Y ADMINISTRADOR ******************
+app.post("/redirectUser", (req, res) => {
+    const { userType } = req.body;
 
+    if (userType === "estudiante") {
+        res.json({ redirectUrl: "/estudiante.html" });
+    } else if (userType === "admin") {
+        res.json({ redirectUrl: "/admin.html" });
+    } else {
+        res.status(400).json({ message: "Tipo de usuario inválido" });
+    }
+});
 // Select estudiante por contraseña y usuario
 app.post('/administrador/login', async (req, res) => {
     const { nombre, contrasenha } = req.body; // Obtener datos del body
