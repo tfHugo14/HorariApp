@@ -52,12 +52,27 @@ document.addEventListener("DOMContentLoaded", function () {
         if (isValid == -2) {
             alert("usuario o contraseña incorrectos");
             setError(passwordInput);
-        } else if (isValid == 0) {
-            alert("estudiante acceso concedido");
-            window.location.replace("http://127.0.0.1:5500/estudiante.html");
-        } else if (isValid == 1) {
-            alert("administrador acceso concedido");
-            window.location.replace("http://127.0.0.1:5500/admin.html");
+        } else if (isValid === 0 || isValid === 1) {
+            // Enviar datos al servidor para la redirección
+            const userType = isValid === 0 ? "estudiante" : "admin";
+
+            try {
+                const response = await fetch("http://localhost:3000/redirectUser", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ userType })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    window.location.href = data.redirectUrl;
+                } else {
+                    alert("Error en la redirección");
+                }
+            } catch (error) {
+                console.error("Error en la redirección:", error);
+                alert("Error en la conexión con el servidor");
+            }
         } else if (isValid == -1) {
             alert("Error en el servidor");
         }
