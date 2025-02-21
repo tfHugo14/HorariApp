@@ -18,15 +18,15 @@
     <main id="mainContainer">
         <nav id="nav">
             <h2 style="margin: 0;">Edición Estudiantes</h2>
-            <img id="btn_abrir_modal_anadir" src="images/icono_anadir.png" width="60" height="60"
+            <img id="btn_abrir_modal_anadir" src="images/icono_anadir.png" width="50" height="50"
                 style="cursor: pointer;">
         </nav>
         <section id="sectionContainer">
             <article class="itemWrapper">
                 <div class="itemHeader">
-                    <img src="images/icono_eliminar.png" width="50" height="50" class="icono_eliminar">
+                    <img src="images/icono_eliminar.png" width="40" height="40" class="icono_eliminar">
                     <h3 class="h3title">idAlumno: [idAlumno]</h3>
-                    <img class="icono_desplegar" src="images/icono_desplegar.png" width="50" height="29">
+                    <img class="icono_desplegar" src="images/icono_desplegar.png" width="40" height="23">
                 </div>
                 <div class="itemBody">
                     <ul>
@@ -47,7 +47,7 @@
     <!-- Ventana Modal para Añadir Estudiante -->
     <div id="modal_anadir_estudiante" class="modal_anadir_estudiante">
         <div class="modal_anadir_contenido">
-            <span class="cerrar_modal_anadir">&times;</span>
+            <span class="cerrar_modal_anadir"><img src="/images/icono_eliminar.png" width="30" height="30"></span>
             <h2>Añadir Estudiante</h2>
             <form id="formulario_anadir_estudiante">
                 <div class="grupo_formulario">
@@ -75,7 +75,6 @@
     <!-- Ventana Modal para Editar Estudiante -->
     <div id="modal_editar_estudiante" class="modal_anadir_estudiante">
         <div class="modal_anadir_contenido">
-            <span class="cerrar_modal_editar">&times;</span>
             <h2>Editar Estudiante</h2>
             <form id="formulario_editar_estudiante">
                 <input type="hidden" id="edit_idUsuario" name="edit_idUsuario">
@@ -93,8 +92,11 @@
                     <label for="edit_dni">DNI</label>
                     <input type="text" id="edit_dni" name="edit_dni" required>
                 </div>
-
+                <br>
                 <button type="submit" class="btn_guardar_estudiante">Guardar Cambios</button>
+                <br><br>
+                <span class="cerrar_modal_editar"><img src="images/icono_eliminar.png" width="30" height="30"></span>
+
             </form>
         </div>
     </div>
@@ -102,11 +104,13 @@
     <!-- Ventana Modal para Ver Módulos del Alumno -->
     <div id="modal_modulos_alumno" class="modal_anadir_estudiante">
         <div class="modal_anadir_contenido">
-            <span class="cerrar_modal_modulos">&times;</span>
             <h2 id="titulo_modulos"></h2>
             <div id="contenido_modulos">
                 <!-- Aquí se insertará dinámicamente el contenido -->
             </div>
+            <br>
+            <span class="cerrar_modal_modulos"><img src="images/icono_eliminar.png" width="30" height="30"></span>
+
         </div>
     </div>
 
@@ -268,7 +272,6 @@
                     }
 
                 } catch (error) {
-
 
                     // Mostrar los valores en un alert
                     alert(`Valores recogidos:
