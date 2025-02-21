@@ -96,10 +96,20 @@ hr{
 #header{
     height: 10vh;
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap;
     padding: 20px;
+}
+
+#logo{
+  width: 100%;
+  padding: 20px;
+}
+
+#logo img{
+  width: 100%;
 }
 
 
@@ -107,6 +117,21 @@ html, body{
     width: 100%;
     height: 100%;
     background-color: #235EA1;
+    margin: 0;
+    padding: 0 !important;
+}
+
+
+.mainContainer{
+  background-color: white;
+  width: 100%;
+  padding-bottom: 4%;
+  padding-top: 3%;
+  border-radius: 20px;
+}
+
+.row{
+  margin: 0 !important;
 }
 
 .head{
@@ -117,22 +142,20 @@ html, body{
     color: #235EA1;
     font-weight: bold;
     background-color: #D2E5EE;
-    border-radius: 10px 0px 0px 10px;
 }
 
 #hora{
     color: #235EA1;
     font-weight: bold;
     background-color: #E8F0F4;
-    border-radius: 10px 0px 0px 10px;
 }
 
 #camposClaros{
-    font-weight: bold;
-    color: white;
-    background-color: #649CB7;
-    border-bottom: #468DAE 2px solid;
-    border-top: #468DAE 2px solid;
+  color: white;
+  background-color: #649CB7;
+  border-bottom: #468DAE 2px solid;
+  font-weight: bold;
+  border-top: #468DAE 2px solid;
 }
 
 #camposOscuros{
@@ -143,18 +166,74 @@ html, body{
     border-top: #649CB7 2px solid;
 }
 
-.botonHorario{
-    width: 37%;
-    margin-left: auto;
-    margin-top: 10%;
+.botonHorario {
+  width: 20%;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.botonHorario button {
+  background-color: #235EA1;
+  border-radius: 10px;
+  font-weight: bold;
+  width: 100%;
+  border: none;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#linea{
+  position: absolute;
+  margin-top: 36px;
+}
+
+.botonHorario button img {
+  width: 30px;
+  transition: transform 0.3s ease;
+}
+
+@keyframes rebote {
+  0% {
+    transform: translateY(0) rotate(0deg);
   }
-  
-  .botonHorario button{
-    background-color: rgb(27 244 157 / 63%);
-    border-radius: 10px;
-    color: #235EA1;
-    font-weight: bold;
-    border: none;
-    padding: 10px;
-    margin-bottom: 15%;
+  30% {
+    transform: translateY(3px) rotate(0deg); /* Baja menos */
   }
+  40% {
+    transform: translateY(8px) rotate(0deg); /* Rebota un poco */
+  }
+  60% {
+    transform: translateY(-5px) rotate(90deg); /* Sube menos y gira */
+  }
+  100% {
+    transform: translateY(-7px) rotate(360deg); /* Baja girando */
+  }
+}
+
+@keyframes doblarLinea {
+  0% {
+    transform: scaleX(1);
+  }
+  30% {
+    transform: scaleX(0.5); /* Se dobla menos */
+  }
+  100% {
+    transform: scaleX(1); /* Vuelve a su estado original */
+  }
+}
+
+.rebotando {
+  animation: rebote 1.5s ease-in-out;
+}
+
+.doblandose {
+  animation: doblarLinea 1.5s ease-in-out;
+}
