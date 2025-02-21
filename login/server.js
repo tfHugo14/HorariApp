@@ -9,6 +9,67 @@ app.use(cors());
 app.use(express.json());
 // app.use(express.static(path.join(__dirname, 'public')));
 
+
+// ******************  LOGIN ESTUDIANTE Y ADMINISTRADOR ******************
+
+// Select estudiante por contraseña y usuario
+app.post('/administrador/login', async (req, res) => {
+    const { nombre, contrasenha } = req.body; // Obtener datos del body
+    const db = new sqlite3.Database(dbPath);
+    try {
+        const administrador = await new Promise((resolve, reject) => {
+            db.get(
+                'SELECT * FROM Administrador WHERE nombre = ? AND contrasenha = ?',
+                [nombre, contrasenha],
+                (err, row) => {
+                    if (err) reject(err);
+                    else resolve(row);
+                }
+            );
+        });
+        if (!administrador) {
+            res.status(404).send("Contraseña o usuario incorrecto");
+            return;
+        }
+
+        res.json(administrador);
+    } catch (error) {
+        res.status(500).send(error.message);
+        db.close();
+    }
+});
+
+// Select estudiante por contraseña y usuario
+app.post('/estudiantes/login', async (req, res) => {
+    const { nombre, contrasenha } = req.body; // Obtener datos del body
+    const db = new sqlite3.Database(dbPath);
+    try {
+        const estudiante = await new Promise((resolve, reject) => {
+            db.get(
+                'SELECT * FROM Estudiante WHERE nombre = ? AND contrasenha = ?',
+                [nombre, contrasenha],
+                (err, row) => {
+                    if (err) reject(err);
+                    else resolve(row);
+                }
+            );
+        });
+        if (!estudiante) {
+            res.status(404).send("Contraseña o usuario incorrecto");
+            return;
+        }
+
+        res.json(estudiante);
+    } catch (error) {
+        res.status(500).send(error.message);
+        db.close();
+    }
+});
+// ******************   ******************
+
+
+
+
 // ****************** MODULOS Y PROFESORES (DANI) ******************
 
 // Select profesores
@@ -108,7 +169,6 @@ app.put('/updateModulo/:id', async (req, res) => {
     }
 });
 
-
 // ****************** ESTUDIANTES(NACHO) ******************
 // ****************** CAMBIAR ******************
 
@@ -187,35 +247,6 @@ app.post('/estudiantes', async (req, res) => {
     }
 });
 
-// Select estudiante por contraseña y usuario
-app.post('/estudiantes/login', async (req, res) => {
-    const { nombre, contrasenha } = req.body; // Obtener datos del body
-    const db = new sqlite3.Database(dbPath);
-    try {
-        const estudiante = await new Promise((resolve, reject) => {
-            db.get(
-                'SELECT * FROM Estudiante WHERE nombre = ? AND contrasenha = ?',
-                [nombre, contrasenha],
-                (err, row) => {
-                    if (err) reject(err);
-                    else resolve(row);
-                }
-            );
-        });
-        console.log(`${nombre} y ${contrasenha}`);
-
-        if (!estudiante) {
-            res.status(404).send("Contraseña o usuario incorrecto");
-            return;
-        }
-
-        res.json(estudiante);
-    } catch (error) {
-        res.status(500).send(error.message);
-    } finally {
-        db.close();
-    }
-});
 // Select estudiante por dni
 app.get('/estudiantes/:dni', async (req, res) => {
     const dni = req.params.dni;
